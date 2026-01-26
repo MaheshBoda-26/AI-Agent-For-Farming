@@ -44,7 +44,7 @@ export const FeaturesSection = () => {
             {t('features.title')}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Simple tools designed for Indian farmers. Get advice in your language.
+            {t('features.subtitle')}
           </p>
         </div>
 

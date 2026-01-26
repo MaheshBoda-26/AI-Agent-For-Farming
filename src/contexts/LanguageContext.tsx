@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Language = 'en' | 'hi' | 'te';
 
@@ -29,6 +29,11 @@ const translations: Translations = {
   
   // Features
   'features.title': { en: 'How We Help You', hi: 'हम आपकी कैसे मदद करते हैं', te: 'మేము మీకు ఎలా సహాయం చేస్తాము' },
+  'features.subtitle': { 
+    en: 'Simple tools designed for Indian farmers. Get advice in your language.',
+    hi: 'भारतीय किसानों के लिए डिज़ाइन किए गए सरल उपकरण। अपनी भाषा में सलाह प्राप्त करें।',
+    te: 'భారతీయ రైతుల కోసం రూపొందించిన సరళ సాధనాలు. మీ భాషలో సలహా పొందండి.'
+  },
   'features.crop.title': { en: 'Crop Advisory', hi: 'फसल सलाह', te: 'పంట సలహా' },
   'features.crop.desc': { 
     en: 'Get personalized recommendations for sowing, watering, and harvesting based on your location and soil.', 
@@ -67,12 +72,35 @@ const translations: Translations = {
     te: 'నమస్కారం! నేను మీ వ్యవసాయ సహాయకుడిని. ఈ రోజు నేను మీకు ఎలా సహాయం చేయగలను?'
   },
   'chat.thinking': { en: 'Thinking...', hi: 'सोच रहा हूं...', te: 'ఆలోచిస్తున్నాను...' },
+  'chat.clear': { en: 'Clear', hi: 'साफ़ करें', te: 'క్లియర్ చేయండి' },
   
   // Quick Actions
   'quick.crop': { en: '🌾 Crop Advice', hi: '🌾 फसल सलाह', te: '🌾 పంట సలహా' },
   'quick.weather': { en: '🌤️ Weather', hi: '🌤️ मौसम', te: '🌤️ వాతావరణం' },
   'quick.pest': { en: '🐛 Pest Help', hi: '🐛 कीट सहायता', te: '🐛 చీడపీడల సహాయం' },
   'quick.market': { en: '📊 Market Prices', hi: '📊 बाजार मूल्य', te: '📊 మార్కెట్ ధరలు' },
+  
+  // Quick Action Queries
+  'quick.crop.query': { 
+    en: 'What crops should I grow this season?', 
+    hi: 'इस मौसम में मुझे कौन सी फसल उगानी चाहिए?',
+    te: 'ఈ సీజన్‌లో నేను ఏ పంటలు పండించాలి?'
+  },
+  'quick.weather.query': { 
+    en: 'What is the weather forecast for my area?', 
+    hi: 'मेरे क्षेत्र के लिए मौसम का पूर्वानुमान क्या है?',
+    te: 'నా ప్రాంతానికి వాతావరణ సూచన ఏమిటి?'
+  },
+  'quick.pest.query': { 
+    en: 'How do I control pests in my crops?', 
+    hi: 'मैं अपनी फसलों में कीटों को कैसे नियंत्रित करूं?',
+    te: 'నా పంటలలో చీడపీడలను ఎలా నియంత్రించాలి?'
+  },
+  'quick.market.query': { 
+    en: 'What are the current market prices for rice?', 
+    hi: 'चावल की वर्तमान बाजार कीमतें क्या हैं?',
+    te: 'బియ్యానికి ప్రస్తుత మార్కెట్ ధరలు ఎంత?'
+  },
   
   // Location
   'location.title': { en: 'Select Your Location', hi: 'अपना स्थान चुनें', te: 'మీ స్థానాన్ని ఎంచుకోండి' },
@@ -85,6 +113,51 @@ const translations: Translations = {
   'weather.rain': { en: 'Rain Expected', hi: 'बारिश की संभावना', te: 'వర్షం అంచనా' },
   'weather.sunny': { en: 'Sunny', hi: 'धूप', te: 'ఎండ' },
   'weather.cloudy': { en: 'Cloudy', hi: 'बादल', te: 'మేఘావృతం' },
+  
+  // Index Page
+  'index.steps.title': { en: 'Simple Steps to Better Farming', hi: 'बेहतर खेती के लिए सरल कदम', te: 'మెరుగైన వ్యవసాయం కోసం సరళ దశలు' },
+  'index.step1.title': { en: 'Open Chat', hi: 'चैट खोलें', te: 'చాట్ తెరవండి' },
+  'index.step1.desc': { en: 'Start a conversation in your language', hi: 'अपनी भाषा में बातचीत शुरू करें', te: 'మీ భాషలో సంభాషణ ప్రారంభించండి' },
+  'index.step2.title': { en: 'Ask Question', hi: 'सवाल पूछें', te: 'ప్రశ్న అడగండి' },
+  'index.step2.desc': { en: 'Type or speak about crops, weather, or pests', hi: 'फसलों, मौसम या कीटों के बारे में टाइप करें या बोलें', te: 'పంటలు, వాతావరణం లేదా చీడపీడల గురించి టైప్ చేయండి లేదా మాట్లాడండి' },
+  'index.step3.title': { en: 'Get Advice', hi: 'सलाह प्राप्त करें', te: 'సలహా పొందండి' },
+  'index.step3.desc': { en: 'Receive actionable steps with timelines', hi: 'समयसीमा के साथ कार्रवाई योग्य कदम प्राप्त करें', te: 'టైమ్‌లైన్‌లతో చర్య తీసుకోదగిన దశలను పొందండి' },
+  
+  // Benefits
+  'benefit.free': { en: 'Free to use for all farmers', hi: 'सभी किसानों के लिए मुफ्त', te: 'అన్ని రైతులకు ఉచితం' },
+  'benefit.languages': { en: 'Works in Hindi, Telugu and English', hi: 'हिंदी, तेलुगु और अंग्रेजी में काम करता है', te: 'హిందీ, తెలుగు మరియు ఆంగ్లంలో పని చేస్తుంది' },
+  'benefit.availability': { en: 'Available 24/7 on any device', hi: 'किसी भी डिवाइस पर 24/7 उपलब्ध', te: 'ఏ పరికరంలోనైనా 24/7 అందుబాటులో' },
+  'benefit.noregistration': { en: 'No registration required', hi: 'पंजीकरण की आवश्यकता नहीं', te: 'నమోదు అవసరం లేదు' },
+  
+  // Today's Tip
+  'tip.title': { en: "Today's Tip", hi: 'आज की टिप', te: 'ఈ రోజు చిట్కా' },
+  'tip.content': { 
+    en: '🌾 Best time to water your wheat crop is early morning (6-8 AM) to reduce evaporation and prevent fungal diseases.',
+    hi: '🌾 अपनी गेहूं की फसल को पानी देने का सबसे अच्छा समय सुबह जल्दी (6-8 बजे) है ताकि वाष्पीकरण कम हो और फफूंद रोगों से बचा जा सके।',
+    te: '🌾 మీ గోధుమ పంటకు నీరు పెట్టడానికి ఉత్తమ సమయం ఉదయం (6-8 AM) బాష్పీభవనం తగ్గించడానికి మరియు ఫంగల్ వ్యాధులను నివారించడానికి.'
+  },
+  'tip.more': { en: 'Get More Tips', hi: 'और टिप्स प्राप्त करें', te: 'మరిన్ని చిట్కాలు పొందండి' },
+  
+  // CTA Section
+  'cta.title': { en: 'Ready to Improve Your Farming?', hi: 'अपनी खेती में सुधार के लिए तैयार?', te: 'మీ వ్యవసాయాన్ని మెరుగుపరచడానికి సిద్ధంగా ఉన్నారా?' },
+  'cta.subtitle': { 
+    en: 'Join thousands of Indian farmers getting AI-powered advice for better crop management.',
+    hi: 'बेहतर फसल प्रबंधन के लिए AI-संचालित सलाह प्राप्त करने वाले हजारों भारतीय किसानों से जुड़ें।',
+    te: 'మెరుగైన పంట నిర్వహణ కోసం AI-ఆధారిత సలహా పొందుతున్న వేలాది భారతీయ రైతులతో చేరండి.'
+  },
+  
+  // Chat Page
+  'chat.tips.title': { en: 'Quick Tips', hi: 'त्वरित सुझाव', te: 'త్వరిత చిట్కాలు' },
+  'chat.tips.1': { en: 'Ask about specific crops for better advice', hi: 'बेहतर सलाह के लिए विशिष्ट फसलों के बारे में पूछें', te: 'మెరుగైన సలహా కోసం నిర్దిష్ట పంటల గురించి అడగండి' },
+  'chat.tips.2': { en: 'Include your location for local weather', hi: 'स्थानीय मौसम के लिए अपना स्थान शामिल करें', te: 'స్థానిక వాతావరణం కోసం మీ స్థానాన్ని చేర్చండి' },
+  'chat.tips.3': { en: 'Describe pest symptoms in detail', hi: 'कीट लक्षणों का विस्तार से वर्णन करें', te: 'చీడపీడల లక్షణాలను వివరంగా వివరించండి' },
+  'chat.tips.4': { en: 'Chat in Hindi, Telugu or English', hi: 'हिंदी, तेलुगु या अंग्रेजी में चैट करें', te: 'హిందీ, తెలుగు లేదా ఆంగ్లంలో చాట్ చేయండి' },
+  
+  'chat.popular.title': { en: 'Popular Questions', hi: 'लोकप्रिय सवाल', te: 'జనప్రియ ప్రశ్నలు' },
+  'chat.popular.1': { en: 'When should I sow wheat?', hi: 'मुझे गेहूं कब बोना चाहिए?', te: 'నేను గోధుమలు ఎప్పుడు విత్తాలి?' },
+  'chat.popular.2': { en: 'How to control aphids in cotton?', hi: 'कपास में एफिड्स को कैसे नियंत्रित करें?', te: 'పత్తిలో ఆఫిడ్‌లను ఎలా నియంత్రించాలి?' },
+  'chat.popular.3': { en: 'Best fertilizer for rice?', hi: 'धान के लिए सबसे अच्छा उर्वरक?', te: 'వరికి ఉత్తమ ఎరువు?' },
+  'chat.popular.4': { en: 'PM-KISAN eligibility?', hi: 'PM-KISAN पात्रता?', te: 'PM-KISAN అర్హత?' },
   
   // Footer
   'footer.tagline': { 
@@ -109,12 +182,34 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  hasSelectedLanguage: boolean;
+  setHasSelectedLanguage: (value: boolean) => void;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const LANGUAGE_STORAGE_KEY = 'preferred-language';
+const LANGUAGE_SELECTED_KEY = 'language-selected';
+
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>(() => {
+    const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return (stored as Language) || 'en';
+  });
+  
+  const [hasSelectedLanguage, setHasSelectedLanguageState] = useState<boolean>(() => {
+    return localStorage.getItem(LANGUAGE_SELECTED_KEY) === 'true';
+  });
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+  };
+
+  const setHasSelectedLanguage = (value: boolean) => {
+    setHasSelectedLanguageState(value);
+    localStorage.setItem(LANGUAGE_SELECTED_KEY, String(value));
+  };
 
   const t = (key: string): string => {
     const translation = translations[key];
@@ -123,7 +218,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, hasSelectedLanguage, setHasSelectedLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

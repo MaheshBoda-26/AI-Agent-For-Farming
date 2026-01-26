@@ -6,40 +6,24 @@ interface QuickActionsProps {
 }
 
 export const QuickActions = ({ onSelect }: QuickActionsProps) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const actions = [
     {
       label: t('quick.crop'),
-      query: language === 'hi' 
-        ? 'मुझे अपनी फसल के बारे में सलाह चाहिए'
-        : language === 'te'
-        ? 'నా పంట గురించి నాకు సలహా కావాలి'
-        : 'I need advice about my crop',
+      query: t('quick.crop.query'),
     },
     {
       label: t('quick.weather'),
-      query: language === 'hi'
-        ? 'आज का मौसम कैसा है?'
-        : language === 'te'
-        ? 'ఈ రోజు వాతావరణం ఎలా ఉంది?'
-        : 'What is the weather forecast?',
+      query: t('quick.weather.query'),
     },
     {
       label: t('quick.pest'),
-      query: language === 'hi'
-        ? 'मेरी फसल में कीट लग गए हैं'
-        : language === 'te'
-        ? 'నా పంటలో చీడపీడలు వచ్చాయి'
-        : 'I have pest problems in my crop',
+      query: t('quick.pest.query'),
     },
     {
       label: t('quick.market'),
-      query: language === 'hi'
-        ? 'आज मंडी में क्या भाव है?'
-        : language === 'te'
-        ? 'ఈ రోజు మార్కెట్ ధరలు ఏమిటి?'
-        : 'What are the current market prices?',
+      query: t('quick.market.query'),
     },
   ];
 

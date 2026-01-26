@@ -78,7 +78,7 @@ export const ChatBox = () => {
             onClick={clearMessages}
             className="text-muted-foreground hover:text-foreground"
           >
-            Clear
+            {t('chat.clear')}
           </Button>
         )}
       </div>
