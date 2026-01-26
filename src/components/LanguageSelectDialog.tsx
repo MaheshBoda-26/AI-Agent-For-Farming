@@ -8,7 +8,8 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Globe, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const languages = [
   {
@@ -53,8 +54,8 @@ export const LanguageSelectDialog = () => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
-          <div className="mx-auto mb-4 h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
-            <Globe className="h-7 w-7 text-primary" />
+          <div className="mx-auto mb-4">
+            <img src={logo} alt="AI Farming Assistant" className="h-16 object-contain" />
           </div>
           <DialogTitle className="text-2xl font-serif text-center">
             Select Your Language

@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
-import { Leaf, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo.png';
 import { useState } from 'react';
 
 export const Navbar = () => {
@@ -23,12 +24,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
-              <Leaf className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="font-serif font-bold text-lg text-foreground hidden sm:block">
-              AI Farming Assistant
-            </span>
+            <img src={logo} alt="AI Farming Assistant" className="h-10 object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
