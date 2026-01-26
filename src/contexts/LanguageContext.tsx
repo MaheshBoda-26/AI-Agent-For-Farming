@@ -166,9 +166,9 @@ const translations: Translations = {
     te: 'AI తో భారతీయ రైతులను సాధికారం చేయడం'
   },
   'footer.copyright': { 
-    en: '© 2024 AI Farming Assistant. All rights reserved.', 
-    hi: '© 2024 AI कृषि सहायक। सर्वाधिकार सुरक्षित।',
-    te: '© 2024 AI వ్యవసాయ సహాయకుడు. అన్ని హక్కులు రిజర్వు చేయబడ్డాయి.'
+    en: '© 2024 Kisan Mitra AI. All rights reserved.', 
+    hi: '© 2024 किसान मित्र AI। सर्वाधिकार सुरक्षित।',
+    te: '© 2024 కిసాన్ మిత్ర AI. అన్ని హక్కులు రిజర్వు చేయబడ్డాయి.'
   },
   
   // Common
