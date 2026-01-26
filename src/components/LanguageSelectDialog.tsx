@@ -55,7 +55,7 @@ export const LanguageSelectDialog = () => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
           <div className="mx-auto mb-4">
-            <img src={logo} alt="AI Farming Assistant" className="h-16 object-contain" />
+            <img src={logo} alt="Kisan Mitra AI" className="h-20 object-contain" />
           </div>
           <DialogTitle className="text-2xl font-serif text-center">
             Select Your Language
