@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
 export const LanguageSelector = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   return (
     <div className="flex items-center gap-2">
@@ -24,6 +24,14 @@ export const LanguageSelector = () => {
           className="rounded-none px-3 py-1 text-sm"
         >
           हिं
+        </Button>
+        <Button
+          variant={language === 'te' ? 'default' : 'ghost'}
+          size="sm"
+          onClick={() => setLanguage('te')}
+          className="rounded-none px-3 py-1 text-sm"
+        >
+          తె
         </Button>
       </div>
     </div>
