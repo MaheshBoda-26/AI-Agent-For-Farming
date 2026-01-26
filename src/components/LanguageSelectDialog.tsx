@@ -16,19 +16,16 @@ const languages = [
     code: 'en' as const,
     name: 'English',
     nativeName: 'English',
-    flag: '🇬🇧',
   },
   {
     code: 'hi' as const,
     name: 'Hindi',
     nativeName: 'हिंदी',
-    flag: '🇮🇳',
   },
   {
     code: 'te' as const,
     name: 'Telugu',
     nativeName: 'తెలుగు',
-    flag: '🇮🇳',
   },
 ];
 
@@ -76,7 +73,6 @@ export const LanguageSelectDialog = () => {
                   : 'border-border hover:border-primary/50 hover:bg-accent'
               }`}
             >
-              <span className="text-3xl">{lang.flag}</span>
               <div className="flex-1 text-left">
                 <p className="font-semibold text-foreground">{lang.nativeName}</p>
                 <p className="text-sm text-muted-foreground">{lang.name}</p>
