@@ -171,6 +171,11 @@ const translations: Translations = {
     te: '© 2024 కిసాన్ మిత్ర AI. అన్ని హక్కులు రిజర్వు చేయబడ్డాయి.'
   },
   
+  // Voice Input
+  'voice.start': { en: 'Speak your question', hi: 'अपना सवाल बोलें', te: 'మీ ప్రశ్న చెప్పండి' },
+  'voice.stop': { en: 'Stop recording', hi: 'रिकॉर्डिंग बंद करें', te: 'రికార్డింగ్ ఆపండి' },
+  'voice.listening': { en: 'Listening...', hi: 'सुन रहा हूं...', te: 'వింటున్నాను...' },
+  
   // Common
   'language': { en: 'Language', hi: 'भाषा', te: 'భాష' },
   'english': { en: 'English', hi: 'अंग्रेज़ी', te: 'ఆంగ్లం' },
