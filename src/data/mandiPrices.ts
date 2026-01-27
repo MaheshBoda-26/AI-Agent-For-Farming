@@ -29,54 +29,100 @@ export interface CropPriceTrend {
   recommendation_hi: string;
 }
 
-// Current mandi prices (simulated real-time data)
-export const MANDI_PRICES: MandiPrice[] = [
-  // Rice
-  { crop_name: "Rice", crop_name_hi: "धान", state: "Punjab", mandi: "Amritsar", min_price: 2100, max_price: 2300, modal_price: 2200, date: "2026-01-27", trend: "up", trend_percent: 3.5 },
-  { crop_name: "Rice", crop_name_hi: "धान", state: "Uttar Pradesh", mandi: "Lucknow", min_price: 2000, max_price: 2250, modal_price: 2150, date: "2026-01-27", trend: "stable", trend_percent: 0.5 },
-  { crop_name: "Rice", crop_name_hi: "धान", state: "West Bengal", mandi: "Kolkata", min_price: 1950, max_price: 2200, modal_price: 2100, date: "2026-01-27", trend: "up", trend_percent: 2.1 },
-  
-  // Wheat
-  { crop_name: "Wheat", crop_name_hi: "गेहूं", state: "Punjab", mandi: "Ludhiana", min_price: 2275, max_price: 2400, modal_price: 2350, date: "2026-01-27", trend: "up", trend_percent: 4.2 },
-  { crop_name: "Wheat", crop_name_hi: "गेहूं", state: "Haryana", mandi: "Karnal", min_price: 2250, max_price: 2380, modal_price: 2320, date: "2026-01-27", trend: "up", trend_percent: 3.8 },
-  { crop_name: "Wheat", crop_name_hi: "गेहूं", state: "Madhya Pradesh", mandi: "Indore", min_price: 2200, max_price: 2350, modal_price: 2280, date: "2026-01-27", trend: "stable", trend_percent: 1.2 },
-  
-  // Cotton
-  { crop_name: "Cotton", crop_name_hi: "कपास", state: "Gujarat", mandi: "Rajkot", min_price: 6500, max_price: 7200, modal_price: 6900, date: "2026-01-27", trend: "down", trend_percent: -2.3 },
-  { crop_name: "Cotton", crop_name_hi: "कपास", state: "Maharashtra", mandi: "Nagpur", min_price: 6400, max_price: 7100, modal_price: 6800, date: "2026-01-27", trend: "down", trend_percent: -1.8 },
-  
-  // Soybean
-  { crop_name: "Soybean", crop_name_hi: "सोयाबीन", state: "Madhya Pradesh", mandi: "Indore", min_price: 4800, max_price: 5200, modal_price: 5000, date: "2026-01-27", trend: "up", trend_percent: 5.1 },
-  { crop_name: "Soybean", crop_name_hi: "सोयाबीन", state: "Maharashtra", mandi: "Latur", min_price: 4700, max_price: 5100, modal_price: 4900, date: "2026-01-27", trend: "up", trend_percent: 4.5 },
-  
-  // Maize
-  { crop_name: "Maize", crop_name_hi: "मक्का", state: "Karnataka", mandi: "Davangere", min_price: 1900, max_price: 2150, modal_price: 2050, date: "2026-01-27", trend: "stable", trend_percent: 0.8 },
-  { crop_name: "Maize", crop_name_hi: "मक्का", state: "Bihar", mandi: "Patna", min_price: 1850, max_price: 2100, modal_price: 2000, date: "2026-01-27", trend: "up", trend_percent: 2.5 },
-  
-  // Groundnut
-  { crop_name: "Groundnut", crop_name_hi: "मूंगफली", state: "Gujarat", mandi: "Junagadh", min_price: 5500, max_price: 6200, modal_price: 5900, date: "2026-01-27", trend: "up", trend_percent: 3.2 },
-  { crop_name: "Groundnut", crop_name_hi: "मूंगफली", state: "Andhra Pradesh", mandi: "Kurnool", min_price: 5400, max_price: 6100, modal_price: 5800, date: "2026-01-27", trend: "stable", trend_percent: 1.0 },
-  
-  // Chickpea
-  { crop_name: "Chickpea", crop_name_hi: "चना", state: "Madhya Pradesh", mandi: "Indore", min_price: 5200, max_price: 5800, modal_price: 5500, date: "2026-01-27", trend: "up", trend_percent: 6.2 },
-  { crop_name: "Chickpea", crop_name_hi: "चना", state: "Rajasthan", mandi: "Bikaner", min_price: 5100, max_price: 5700, modal_price: 5400, date: "2026-01-27", trend: "up", trend_percent: 5.8 },
-  
-  // Mustard
-  { crop_name: "Mustard", crop_name_hi: "सरसों", state: "Rajasthan", mandi: "Jaipur", min_price: 5800, max_price: 6400, modal_price: 6100, date: "2026-01-27", trend: "up", trend_percent: 4.5 },
-  { crop_name: "Mustard", crop_name_hi: "सरसों", state: "Haryana", mandi: "Hisar", min_price: 5700, max_price: 6300, modal_price: 6000, date: "2026-01-27", trend: "up", trend_percent: 4.0 },
-  
-  // Onion
-  { crop_name: "Onion", crop_name_hi: "प्याज", state: "Maharashtra", mandi: "Nashik", min_price: 1200, max_price: 1800, modal_price: 1500, date: "2026-01-27", trend: "down", trend_percent: -8.5 },
-  { crop_name: "Onion", crop_name_hi: "प्याज", state: "Karnataka", mandi: "Hubli", min_price: 1100, max_price: 1700, modal_price: 1400, date: "2026-01-27", trend: "down", trend_percent: -7.2 },
-  
-  // Potato
-  { crop_name: "Potato", crop_name_hi: "आलू", state: "Uttar Pradesh", mandi: "Agra", min_price: 800, max_price: 1200, modal_price: 1000, date: "2026-01-27", trend: "stable", trend_percent: 1.5 },
-  { crop_name: "Potato", crop_name_hi: "आलू", state: "West Bengal", mandi: "Hooghly", min_price: 750, max_price: 1150, modal_price: 950, date: "2026-01-27", trend: "up", trend_percent: 2.8 },
-  
-  // Sugarcane
-  { crop_name: "Sugarcane", crop_name_hi: "गन्ना", state: "Uttar Pradesh", mandi: "Muzaffarnagar", min_price: 350, max_price: 400, modal_price: 375, date: "2026-01-27", trend: "stable", trend_percent: 0.5 },
-  { crop_name: "Sugarcane", crop_name_hi: "गन्ना", state: "Maharashtra", mandi: "Kolhapur", min_price: 340, max_price: 390, modal_price: 365, date: "2026-01-27", trend: "stable", trend_percent: 0.3 },
+// All 28 Indian states with major mandis
+const ALL_INDIAN_STATES = [
+  { state: "Andhra Pradesh", mandis: ["Kurnool", "Guntur", "Vijayawada"] },
+  { state: "Arunachal Pradesh", mandis: ["Itanagar", "Naharlagun"] },
+  { state: "Assam", mandis: ["Guwahati", "Dibrugarh", "Silchar"] },
+  { state: "Bihar", mandis: ["Patna", "Muzaffarpur", "Bhagalpur"] },
+  { state: "Chhattisgarh", mandis: ["Raipur", "Bilaspur", "Durg"] },
+  { state: "Goa", mandis: ["Panaji", "Margao"] },
+  { state: "Gujarat", mandis: ["Rajkot", "Ahmedabad", "Junagadh", "Surat"] },
+  { state: "Haryana", mandis: ["Karnal", "Hisar", "Ambala", "Rohtak"] },
+  { state: "Himachal Pradesh", mandis: ["Shimla", "Mandi", "Kullu"] },
+  { state: "Jharkhand", mandis: ["Ranchi", "Jamshedpur", "Dhanbad"] },
+  { state: "Karnataka", mandis: ["Davangere", "Hubli", "Belgaum", "Mysore"] },
+  { state: "Kerala", mandis: ["Kochi", "Thiruvananthapuram", "Kozhikode"] },
+  { state: "Madhya Pradesh", mandis: ["Indore", "Bhopal", "Jabalpur", "Gwalior"] },
+  { state: "Maharashtra", mandis: ["Nashik", "Nagpur", "Pune", "Aurangabad", "Latur"] },
+  { state: "Manipur", mandis: ["Imphal", "Thoubal"] },
+  { state: "Meghalaya", mandis: ["Shillong", "Tura"] },
+  { state: "Mizoram", mandis: ["Aizawl", "Lunglei"] },
+  { state: "Nagaland", mandis: ["Dimapur", "Kohima"] },
+  { state: "Odisha", mandis: ["Bhubaneswar", "Cuttack", "Sambalpur"] },
+  { state: "Punjab", mandis: ["Amritsar", "Ludhiana", "Jalandhar", "Patiala"] },
+  { state: "Rajasthan", mandis: ["Jaipur", "Jodhpur", "Bikaner", "Udaipur", "Kota"] },
+  { state: "Sikkim", mandis: ["Gangtok", "Namchi"] },
+  { state: "Tamil Nadu", mandis: ["Chennai", "Coimbatore", "Madurai", "Salem"] },
+  { state: "Telangana", mandis: ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"] },
+  { state: "Tripura", mandis: ["Agartala", "Udaipur"] },
+  { state: "Uttar Pradesh", mandis: ["Lucknow", "Agra", "Kanpur", "Varanasi", "Muzaffarnagar"] },
+  { state: "Uttarakhand", mandis: ["Dehradun", "Haridwar", "Rudrapur"] },
+  { state: "West Bengal", mandis: ["Kolkata", "Hooghly", "Siliguri", "Bardhaman"] },
 ];
+
+// Crop data with base prices
+const CROP_BASE_DATA = [
+  { crop_name: "Rice", crop_name_hi: "धान", base_price: 2200, variance: 150, trend: "up" as const, trend_percent: 3.5 },
+  { crop_name: "Wheat", crop_name_hi: "गेहूं", base_price: 2350, variance: 100, trend: "up" as const, trend_percent: 4.2 },
+  { crop_name: "Cotton", crop_name_hi: "कपास", base_price: 6900, variance: 400, trend: "down" as const, trend_percent: -2.3 },
+  { crop_name: "Soybean", crop_name_hi: "सोयाबीन", base_price: 5000, variance: 250, trend: "up" as const, trend_percent: 5.1 },
+  { crop_name: "Maize", crop_name_hi: "मक्का", base_price: 2050, variance: 150, trend: "stable" as const, trend_percent: 0.8 },
+  { crop_name: "Groundnut", crop_name_hi: "मूंगफली", base_price: 5900, variance: 350, trend: "up" as const, trend_percent: 3.2 },
+  { crop_name: "Chickpea", crop_name_hi: "चना", base_price: 5500, variance: 300, trend: "up" as const, trend_percent: 6.2 },
+  { crop_name: "Mustard", crop_name_hi: "सरसों", base_price: 6100, variance: 300, trend: "up" as const, trend_percent: 4.5 },
+  { crop_name: "Onion", crop_name_hi: "प्याज", base_price: 1500, variance: 300, trend: "down" as const, trend_percent: -8.5 },
+  { crop_name: "Potato", crop_name_hi: "आलू", base_price: 1000, variance: 200, trend: "stable" as const, trend_percent: 1.5 },
+  { crop_name: "Sugarcane", crop_name_hi: "गन्ना", base_price: 375, variance: 25, trend: "stable" as const, trend_percent: 0.5 },
+  { crop_name: "Bajra", crop_name_hi: "बाजरा", base_price: 2250, variance: 150, trend: "up" as const, trend_percent: 2.8 },
+  { crop_name: "Jowar", crop_name_hi: "ज्वार", base_price: 2800, variance: 200, trend: "stable" as const, trend_percent: 1.2 },
+  { crop_name: "Arhar", crop_name_hi: "अरहर", base_price: 6500, variance: 400, trend: "up" as const, trend_percent: 3.8 },
+  { crop_name: "Moong", crop_name_hi: "मूंग", base_price: 7500, variance: 500, trend: "up" as const, trend_percent: 4.1 },
+  { crop_name: "Urad", crop_name_hi: "उड़द", base_price: 6800, variance: 400, trend: "stable" as const, trend_percent: 0.9 },
+];
+
+// Deterministic pseudo-random function based on seed
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Generate mandi prices for all 28 states
+function generateMandiPrices(): MandiPrice[] {
+  const prices: MandiPrice[] = [];
+  const today = "2026-01-27";
+  
+  ALL_INDIAN_STATES.forEach((stateData, stateIndex) => {
+    CROP_BASE_DATA.forEach((crop, cropIndex) => {
+      // Add 1-2 mandis per state per crop
+      const mandiCount = Math.min(2, stateData.mandis.length);
+      for (let i = 0; i < mandiCount; i++) {
+        const mandi = stateData.mandis[i];
+        const seed = stateIndex * 1000 + cropIndex * 10 + i;
+        const priceVariation = Math.floor((seededRandom(seed) - 0.5) * crop.variance * 2);
+        const modalPrice = crop.base_price + priceVariation;
+        
+        prices.push({
+          crop_name: crop.crop_name,
+          crop_name_hi: crop.crop_name_hi,
+          state: stateData.state,
+          mandi: mandi,
+          min_price: modalPrice - Math.floor(crop.variance * 0.5),
+          max_price: modalPrice + Math.floor(crop.variance * 0.5),
+          modal_price: modalPrice,
+          date: today,
+          trend: crop.trend,
+          trend_percent: crop.trend_percent + (seededRandom(seed + 1) - 0.5) * 2,
+        });
+      }
+    });
+  });
+  
+  return prices;
+}
+
+// Current mandi prices - covers all 28 Indian states
+export const MANDI_PRICES: MandiPrice[] = generateMandiPrices();
 
 // Historical price trends (last 6 months)
 export const CROP_PRICE_TRENDS: CropPriceTrend[] = [
@@ -224,16 +270,160 @@ export const CROP_PRICE_TRENDS: CropPriceTrend[] = [
     recommendation: "Store in cold storage. Prices typically peak in summer months.",
     recommendation_hi: "कोल्ड स्टोरेज में रखें। गर्मियों में कीमतें आमतौर पर चरम पर होती हैं।"
   },
+  {
+    crop_name: "Maize",
+    crop_name_hi: "मक्का",
+    prices: [
+      { date: "Aug 2025", price: 1850 },
+      { date: "Sep 2025", price: 1900 },
+      { date: "Oct 2025", price: 1950 },
+      { date: "Nov 2025", price: 2000 },
+      { date: "Dec 2025", price: 2020 },
+      { date: "Jan 2026", price: 2050 },
+    ],
+    best_selling_month: "March-April",
+    best_selling_month_hi: "मार्च-अप्रैल",
+    peak_price: 2300,
+    current_price: 2050,
+    recommendation: "Good prices currently. Consider gradual selling.",
+    recommendation_hi: "वर्तमान में अच्छी कीमतें। धीरे-धीरे बेचने पर विचार करें।"
+  },
+  {
+    crop_name: "Groundnut",
+    crop_name_hi: "मूंगफली",
+    prices: [
+      { date: "Aug 2025", price: 5500 },
+      { date: "Sep 2025", price: 5600 },
+      { date: "Oct 2025", price: 5700 },
+      { date: "Nov 2025", price: 5750 },
+      { date: "Dec 2025", price: 5850 },
+      { date: "Jan 2026", price: 5900 },
+    ],
+    best_selling_month: "February-March",
+    best_selling_month_hi: "फरवरी-मार्च",
+    peak_price: 6300,
+    current_price: 5900,
+    recommendation: "Prices rising steadily. Hold for 1 more month for better returns.",
+    recommendation_hi: "कीमतें लगातार बढ़ रही हैं। बेहतर रिटर्न के लिए 1 और महीने रुकें।"
+  },
+  {
+    crop_name: "Arhar",
+    crop_name_hi: "अरहर",
+    prices: [
+      { date: "Aug 2025", price: 6000 },
+      { date: "Sep 2025", price: 6100 },
+      { date: "Oct 2025", price: 6200 },
+      { date: "Nov 2025", price: 6350 },
+      { date: "Dec 2025", price: 6400 },
+      { date: "Jan 2026", price: 6500 },
+    ],
+    best_selling_month: "March-April",
+    best_selling_month_hi: "मार्च-अप्रैल",
+    peak_price: 7000,
+    current_price: 6500,
+    recommendation: "Hold for better prices before new crop arrives.",
+    recommendation_hi: "नई फसल आने से पहले बेहतर कीमतों के लिए रुकें।"
+  },
+  {
+    crop_name: "Moong",
+    crop_name_hi: "मूंग",
+    prices: [
+      { date: "Aug 2025", price: 7000 },
+      { date: "Sep 2025", price: 7100 },
+      { date: "Oct 2025", price: 7250 },
+      { date: "Nov 2025", price: 7350 },
+      { date: "Dec 2025", price: 7450 },
+      { date: "Jan 2026", price: 7500 },
+    ],
+    best_selling_month: "April-May",
+    best_selling_month_hi: "अप्रैल-मई",
+    peak_price: 8000,
+    current_price: 7500,
+    recommendation: "Strong demand. Prices expected to rise further.",
+    recommendation_hi: "मजबूत मांग। कीमतें और बढ़ने की उम्मीद।"
+  },
+  {
+    crop_name: "Urad",
+    crop_name_hi: "उड़द",
+    prices: [
+      { date: "Aug 2025", price: 6500 },
+      { date: "Sep 2025", price: 6550 },
+      { date: "Oct 2025", price: 6600 },
+      { date: "Nov 2025", price: 6700 },
+      { date: "Dec 2025", price: 6750 },
+      { date: "Jan 2026", price: 6800 },
+    ],
+    best_selling_month: "March-April",
+    best_selling_month_hi: "मार्च-अप्रैल",
+    peak_price: 7200,
+    current_price: 6800,
+    recommendation: "Stable market. Good time for gradual selling.",
+    recommendation_hi: "स्थिर बाजार। धीरे-धीरे बेचने का अच्छा समय।"
+  },
+  {
+    crop_name: "Bajra",
+    crop_name_hi: "बाजरा",
+    prices: [
+      { date: "Aug 2025", price: 2050 },
+      { date: "Sep 2025", price: 2100 },
+      { date: "Oct 2025", price: 2120 },
+      { date: "Nov 2025", price: 2180 },
+      { date: "Dec 2025", price: 2220 },
+      { date: "Jan 2026", price: 2250 },
+    ],
+    best_selling_month: "February-March",
+    best_selling_month_hi: "फरवरी-मार्च",
+    peak_price: 2500,
+    current_price: 2250,
+    recommendation: "Prices improving. Hold for better returns.",
+    recommendation_hi: "कीमतें सुधर रही हैं। बेहतर रिटर्न के लिए रुकें।"
+  },
+  {
+    crop_name: "Jowar",
+    crop_name_hi: "ज्वार",
+    prices: [
+      { date: "Aug 2025", price: 2600 },
+      { date: "Sep 2025", price: 2650 },
+      { date: "Oct 2025", price: 2700 },
+      { date: "Nov 2025", price: 2720 },
+      { date: "Dec 2025", price: 2780 },
+      { date: "Jan 2026", price: 2800 },
+    ],
+    best_selling_month: "March-April",
+    best_selling_month_hi: "मार्च-अप्रैल",
+    peak_price: 3100,
+    current_price: 2800,
+    recommendation: "Moderate demand. Consider selling if storage is an issue.",
+    recommendation_hi: "मध्यम मांग। स्टोरेज समस्या हो तो बेचने पर विचार करें।"
+  },
+  {
+    crop_name: "Sugarcane",
+    crop_name_hi: "गन्ना",
+    prices: [
+      { date: "Aug 2025", price: 350 },
+      { date: "Sep 2025", price: 355 },
+      { date: "Oct 2025", price: 360 },
+      { date: "Nov 2025", price: 365 },
+      { date: "Dec 2025", price: 370 },
+      { date: "Jan 2026", price: 375 },
+    ],
+    best_selling_month: "November-February",
+    best_selling_month_hi: "नवंबर-फरवरी",
+    peak_price: 400,
+    current_price: 375,
+    recommendation: "Peak crushing season. Sell to nearby mills for best prices.",
+    recommendation_hi: "पीक क्रशिंग सीजन। सबसे अच्छी कीमतों के लिए पास की मिलों को बेचें।"
+  },
 ];
 
 // Get unique crops from price data
 export function getUniqueCrops(): string[] {
-  return [...new Set(MANDI_PRICES.map(p => p.crop_name))];
+  return [...new Set(MANDI_PRICES.map(p => p.crop_name))].sort();
 }
 
 // Get unique states from price data
 export function getUniqueStates(): string[] {
-  return [...new Set(MANDI_PRICES.map(p => p.state))];
+  return [...new Set(MANDI_PRICES.map(p => p.state))].sort();
 }
 
 // Filter prices by crop and/or state
