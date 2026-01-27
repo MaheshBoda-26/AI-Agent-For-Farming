@@ -141,12 +141,12 @@ export default function MarketPrices() {
 
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8">
-          <Select value={selectedCrop} onValueChange={setSelectedCrop}>
+          <Select value={selectedCrop || "all"} onValueChange={(val) => setSelectedCrop(val === "all" ? "" : val)}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder={language === 'hi' ? 'फसल चुनें' : 'Select Crop'} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">
+              <SelectItem value="all">
                 {language === 'hi' ? 'सभी फसलें' : 'All Crops'}
               </SelectItem>
               {crops.map(crop => (
@@ -155,12 +155,12 @@ export default function MarketPrices() {
             </SelectContent>
           </Select>
 
-          <Select value={selectedState} onValueChange={setSelectedState}>
+          <Select value={selectedState || "all"} onValueChange={(val) => setSelectedState(val === "all" ? "" : val)}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder={language === 'hi' ? 'राज्य चुनें' : 'Select State'} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">
+              <SelectItem value="all">
                 {language === 'hi' ? 'सभी राज्य' : 'All States'}
               </SelectItem>
               {states.map(state => (
