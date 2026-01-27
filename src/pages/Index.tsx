@@ -26,7 +26,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[116px]">
       <WeatherAlertWidget />
       <Navbar />
       
