@@ -3,6 +3,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
 import { Footer } from '@/components/Footer';
 import { WeatherCard } from '@/components/WeatherCard';
+import { WeatherAlertWidget } from '@/components/WeatherAlertWidget';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -26,6 +27,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <WeatherAlertWidget />
       <Navbar />
       
       {/* Hero Section */}
