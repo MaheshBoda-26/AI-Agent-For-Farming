@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LanguageSelectDialog } from "@/components/LanguageSelectDialog";
+import { AssistantWidget } from "@/components/AssistantWidget";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import MarketPrices from "./pages/MarketPrices";
@@ -27,6 +28,7 @@ function App() {
               <Route path="/market" element={<MarketPrices />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <AssistantWidget />
           </BrowserRouter>
         </TooltipProvider>
       </LanguageProvider>
