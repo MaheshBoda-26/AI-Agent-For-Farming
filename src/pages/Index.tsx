@@ -30,7 +30,7 @@ const Index = () => {
       <Navbar />
       
       {/* Platform Name Banner */}
-      <div className="bg-primary/10 py-6 text-center">
+      <div className="bg-primary/10 py-6 text-center mt-16">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary">
           🌾 Kisan Mitra AI
         </h1>
