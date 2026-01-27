@@ -199,7 +199,7 @@ export const WeatherAlertWidget = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-primary/5 via-chart-3/5 to-chart-4/5 border-b border-border">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-primary/5 via-chart-3/5 to-chart-4/5 border-b border-border backdrop-blur-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
           {/* Current Weather Summary */}
