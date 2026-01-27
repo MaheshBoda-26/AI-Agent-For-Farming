@@ -6,40 +6,53 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { TrendingUp, TrendingDown, Minus, IndianRupee, Calendar, MapPin, ArrowRight } from 'lucide-react';
-import { useMandiPrices, MandiPrice, CropTrend } from '@/hooks/useMandiPrices';
-import { MANDI_PRICES, CROP_PRICE_TRENDS, getUniqueCrops, getUniqueStates } from '@/data/mandiPrices';
+import { Button } from '@/components/ui/button';
+import { TrendingUp, TrendingDown, Minus, IndianRupee, Calendar, MapPin, RefreshCw, Wifi, WifiOff } from 'lucide-react';
+import { useMandiPrices, MandiPrice } from '@/hooks/useMandiPrices';
+import { MANDI_PRICES, CROP_PRICE_TRENDS, getUniqueCrops, getUniqueStates, CropPriceTrend } from '@/data/mandiPrices';
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { Area, AreaChart, XAxis, YAxis } from 'recharts';
 
 export default function MarketPrices() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
+  const { data: apiData, isLoading, error, fetchPrices } = useMandiPrices();
+  
   const [selectedCrop, setSelectedCrop] = useState<string>('');
   const [selectedState, setSelectedState] = useState<string>('');
-  const [prices, setPrices] = useState<MandiPrice[]>(MANDI_PRICES);
-  const [trend, setTrend] = useState<CropTrend | null>(null);
 
-  const crops = getUniqueCrops();
-  const states = getUniqueStates();
+  // Use API data if available, otherwise fallback to static data
+  const isLiveData = apiData?.is_live_data ?? false;
+  const lastUpdated = apiData?.last_updated ? new Date(apiData.last_updated).toLocaleString() : null;
+  
+  // Get prices from API or fallback
+  const allPrices = apiData?.prices ?? MANDI_PRICES;
+  
+  // Apply filters
+  let filteredPrices = [...allPrices];
+  if (selectedCrop) {
+    filteredPrices = filteredPrices.filter(p => p.crop_name === selectedCrop);
+  }
+  if (selectedState) {
+    filteredPrices = filteredPrices.filter(p => p.state === selectedState);
+  }
 
+  // Get trend data
+  const trend = selectedCrop 
+    ? (apiData?.trend || CROP_PRICE_TRENDS.find(t => t.crop_name === selectedCrop))
+    : null;
+
+  // Get filter options
+  const crops = apiData?.filters?.crops ?? getUniqueCrops();
+  const states = apiData?.filters?.states ?? getUniqueStates();
+
+  // Refetch when filters change
   useEffect(() => {
-    let filtered = [...MANDI_PRICES];
-    if (selectedCrop) {
-      filtered = filtered.filter(p => p.crop_name === selectedCrop);
-      const cropTrend = CROP_PRICE_TRENDS.find(t => t.crop_name === selectedCrop);
-      setTrend(cropTrend || null);
-    } else {
-      setTrend(null);
-    }
-    if (selectedState) {
-      filtered = filtered.filter(p => p.state === selectedState);
-    }
-    setPrices(filtered);
-  }, [selectedCrop, selectedState]);
+    fetchPrices(selectedCrop || undefined, selectedState || undefined);
+  }, [selectedCrop, selectedState, fetchPrices]);
 
   const getTrendIcon = (trendType: 'up' | 'down' | 'stable') => {
     switch (trendType) {
@@ -77,14 +90,53 @@ export default function MarketPrices() {
       <main className="flex-1 container mx-auto px-4 py-8 mt-16">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            {language === 'hi' ? 'मंडी भाव' : 'Mandi Prices'}
-          </h1>
-          <p className="text-muted-foreground">
-            {language === 'hi' 
-              ? 'विभिन्न फसलों के वर्तमान बाजार भाव और रुझान देखें'
-              : 'View current market prices and trends for different crops'}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                {language === 'hi' ? 'मंडी भाव' : 'Mandi Prices'}
+              </h1>
+              <p className="text-muted-foreground">
+                {language === 'hi' 
+                  ? 'विभिन्न फसलों के वर्तमान बाजार भाव और रुझान देखें'
+                  : 'View current market prices and trends for different crops'}
+              </p>
+            </div>
+            
+            {/* Data source indicator */}
+            <div className="flex items-center gap-3">
+              <Badge 
+                variant={isLiveData ? "default" : "secondary"}
+                className={isLiveData ? "bg-green-600" : ""}
+              >
+                {isLiveData ? (
+                  <>
+                    <Wifi className="h-3 w-3 mr-1" />
+                    {language === 'hi' ? 'लाइव डेटा' : 'Live Data'}
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="h-3 w-3 mr-1" />
+                    {language === 'hi' ? 'डेमो डेटा' : 'Demo Data'}
+                  </>
+                )}
+              </Badge>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => fetchPrices(selectedCrop || undefined, selectedState || undefined)}
+                disabled={isLoading}
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                {language === 'hi' ? 'ताज़ा करें' : 'Refresh'}
+              </Button>
+            </div>
+          </div>
+          
+          {lastUpdated && (
+            <p className="text-xs text-muted-foreground mt-2">
+              {language === 'hi' ? 'अंतिम अपडेट:' : 'Last updated:'} {lastUpdated}
+            </p>
+          )}
         </div>
 
         {/* Filters */}
@@ -118,8 +170,36 @@ export default function MarketPrices() {
           </Select>
         </div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <Card key={i}>
+                <CardContent className="p-4">
+                  <Skeleton className="h-6 w-24 mb-2" />
+                  <Skeleton className="h-4 w-32 mb-4" />
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-3/4" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <Card className="mb-8 border-destructive">
+            <CardContent className="p-4">
+              <p className="text-destructive">
+                {language === 'hi' ? 'डेटा लोड करने में त्रुटि:' : 'Error loading data:'} {error}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Price Trend Chart (when crop selected) */}
-        {trend && (
+        {trend && !isLoading && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -206,54 +286,56 @@ export default function MarketPrices() {
         )}
 
         {/* Price Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {prices.map((price, idx) => (
-            <Card key={`${price.crop_name}-${price.mandi}-${idx}`} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="font-semibold text-foreground">
-                      {language === 'hi' ? price.crop_name_hi : price.crop_name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {price.mandi}, {price.state}
-                    </p>
+        {!isLoading && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredPrices.map((price, idx) => (
+              <Card key={`${price.crop_name}-${price.mandi}-${idx}`} className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-foreground">
+                        {language === 'hi' ? price.crop_name_hi : price.crop_name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {price.mandi}, {price.state}
+                      </p>
+                    </div>
+                    <Badge variant="secondary" className={getTrendColor(price.trend)}>
+                      {getTrendIcon(price.trend)}
+                      <span className="ml-1">
+                        {price.trend_percent > 0 ? '+' : ''}{price.trend_percent}%
+                      </span>
+                    </Badge>
                   </div>
-                  <Badge variant="secondary" className={getTrendColor(price.trend)}>
-                    {getTrendIcon(price.trend)}
-                    <span className="ml-1">
-                      {price.trend_percent > 0 ? '+' : ''}{price.trend_percent}%
-                    </span>
-                  </Badge>
-                </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {language === 'hi' ? 'न्यूनतम' : 'Min'}
-                    </span>
-                    <span className="font-medium">₹{price.min_price}</span>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {language === 'hi' ? 'न्यूनतम' : 'Min'}
+                      </span>
+                      <span className="font-medium">₹{price.min_price}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {language === 'hi' ? 'अधिकतम' : 'Max'}
+                      </span>
+                      <span className="font-medium">₹{price.max_price}</span>
+                    </div>
+                    <div className="flex justify-between text-sm border-t pt-2">
+                      <span className="font-medium text-foreground">
+                        {language === 'hi' ? 'मोडल भाव' : 'Modal Price'}
+                      </span>
+                      <span className="font-bold text-primary">₹{price.modal_price}/q</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {language === 'hi' ? 'अधिकतम' : 'Max'}
-                    </span>
-                    <span className="font-medium">₹{price.max_price}</span>
-                  </div>
-                  <div className="flex justify-between text-sm border-t pt-2">
-                    <span className="font-medium text-foreground">
-                      {language === 'hi' ? 'मोडल भाव' : 'Modal Price'}
-                    </span>
-                    <span className="font-bold text-primary">₹{price.modal_price}/q</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
-        {prices.length === 0 && (
+        {!isLoading && filteredPrices.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
               {language === 'hi' 
@@ -271,6 +353,13 @@ export default function MarketPrices() {
               {language === 'hi' 
                 ? 'कीमतें प्रति क्विंटल (100 किलो) में हैं। वास्तविक कीमतें स्थानीय मंडी में भिन्न हो सकती हैं।'
                 : 'Prices are per quintal (100 kg). Actual prices may vary at local mandis.'}
+              {isLiveData && (
+                <span className="block mt-1">
+                  {language === 'hi' 
+                    ? 'डेटा स्रोत: data.gov.in (Open Government Data Platform)'
+                    : 'Data source: data.gov.in (Open Government Data Platform)'}
+                </span>
+              )}
             </p>
           </CardContent>
         </Card>

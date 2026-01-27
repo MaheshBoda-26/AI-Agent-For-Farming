@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface MandiPrice {
@@ -34,6 +34,7 @@ export interface MandiPricesResponse {
     states: string[];
   };
   last_updated: string;
+  is_live_data: boolean;
 }
 
 export function useMandiPrices() {
@@ -46,47 +47,32 @@ export function useMandiPrices() {
     setError(null);
 
     try {
+      // Build query params
       const params = new URLSearchParams();
       if (crop) params.set('crop', crop);
       if (state) params.set('state', state);
 
+      // Supabase edge function invocation
       const { data: response, error: fnError } = await supabase.functions.invoke(
         'mandi-prices',
         {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: null,
         }
       );
 
-      // Handle function invocation with query params
-      const queryString = params.toString();
-      const functionUrl = `mandi-prices${queryString ? `?${queryString}` : ''}`;
+      if (fnError) {
+        throw new Error(fnError.message);
+      }
+
+      if (!response?.success) {
+        throw new Error(response?.error || 'Failed to fetch prices');
+      }
+
+      // Apply client-side filters since edge function returns all data
+      let filteredData = { ...response.data };
       
-      const { data: pricesData, error: pricesError } = await supabase.functions.invoke(
-        functionUrl.split('?')[0],
-        {
-          method: 'GET',
-        }
-      );
-
-      if (pricesError) {
-        throw new Error(pricesError.message);
-      }
-
-      if (!pricesData?.success) {
-        throw new Error(pricesData?.error || 'Failed to fetch prices');
-      }
-
-      // Apply filters client-side since edge function GET doesn't support body
-      let filteredData = { ...pricesData.data };
       if (crop) {
         filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.crop_name === crop);
-        // Find trend for selected crop
-        const allTrends = await fetchAllTrends();
-        filteredData.trend = allTrends.find((t: CropTrend) => t.crop_name === crop) || null;
       }
       if (state) {
         filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.state === state);
@@ -102,21 +88,16 @@ export function useMandiPrices() {
     }
   }, []);
 
-  const fetchAllTrends = async (): Promise<CropTrend[]> => {
-    // This would be a separate endpoint in production
-    // For now, we'll return from the main endpoint
-    try {
-      const { data: response } = await supabase.functions.invoke('mandi-prices');
-      return response?.data?.trends || [];
-    } catch {
-      return [];
-    }
-  };
+  // Auto-fetch on mount
+  useEffect(() => {
+    fetchPrices();
+  }, [fetchPrices]);
 
   return {
     isLoading,
     error,
     data,
     fetchPrices,
+    refetch: () => fetchPrices(),
   };
 }
