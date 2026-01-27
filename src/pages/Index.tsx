@@ -30,6 +30,16 @@ const Index = () => {
       <WeatherAlertWidget />
       <Navbar />
       
+      {/* Platform Name Banner */}
+      <div className="bg-primary/10 py-6 text-center">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary">
+          🌾 Kisan Mitra AI
+        </h1>
+        <p className="text-muted-foreground mt-2 text-sm md:text-base">
+          Your Smart Farming Companion
+        </p>
+      </div>
+
       {/* Hero Section */}
       <HeroSection />
 
