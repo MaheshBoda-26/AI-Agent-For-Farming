@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.analyze-crop-image]
 verify_jwt = false
+
+[functions.mandi-prices]
+verify_jwt = false

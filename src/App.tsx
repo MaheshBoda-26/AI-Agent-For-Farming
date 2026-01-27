@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LanguageSelectDialog } from "@/components/LanguageSelectDialog";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
+import MarketPrices from "./pages/MarketPrices";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/market" element={<MarketPrices />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
