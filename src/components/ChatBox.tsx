@@ -9,7 +9,12 @@ import { VoiceInput } from './VoiceInput';
 import { Send, Leaf, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-export const ChatBox = () => {
+interface ChatBoxProps {
+  initialMessage?: string | null;
+  onMessageSent?: () => void;
+}
+
+export const ChatBox = ({ initialMessage, onMessageSent }: ChatBoxProps) => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const [input, setInput] = useState('');
@@ -28,6 +33,14 @@ export const ChatBox = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Handle initial message from crop suggestion
+  useEffect(() => {
+    if (initialMessage && !isLoading) {
+      sendMessage(initialMessage);
+      onMessageSent?.();
+    }
+  }, [initialMessage]);
 
   useEffect(() => {
     if (error) {

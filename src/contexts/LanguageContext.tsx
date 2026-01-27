@@ -176,6 +176,17 @@ const translations: Translations = {
   'voice.stop': { en: 'Stop recording', hi: 'रिकॉर्डिंग बंद करें', te: 'రికార్డింగ్ ఆపండి' },
   'voice.listening': { en: 'Listening...', hi: 'सुन रहा हूं...', te: 'వింటున్నాను...' },
   
+  // Crop Suggestion
+  'crop.suggest.title': { en: 'Crop Suggestion Engine', hi: 'फसल सुझाव इंजन', te: 'పంట సూచన ఇంజన్' },
+  'crop.suggest.state': { en: 'State', hi: 'राज्य', te: 'రాష్ట్రం' },
+  'crop.suggest.soil': { en: 'Soil Type', hi: 'मिट्टी का प्रकार', te: 'నేల రకం' },
+  'crop.suggest.season': { en: 'Season', hi: 'मौसम', te: 'సీజన్' },
+  'crop.suggest.button': { en: 'Get Crop Suggestions', hi: 'फसल सुझाव प्राप्त करें', te: 'పంట సూచనలు పొందండి' },
+  'crop.suggest.analyzing': { en: 'Analyzing...', hi: 'विश्लेषण हो रहा है...', te: 'విశ్లేషిస్తోంది...' },
+  'crop.suggest.results': { en: 'Recommended Crops', hi: 'सुझाई गई फसलें', te: 'సిఫార్సు చేసిన పంటలు' },
+  'crop.suggest.suitable': { en: 'suitable', hi: 'उपयुक्त', te: 'అనుకూలం' },
+  'crop.suggest.ask': { en: 'Ask AI about these crops', hi: 'इन फसलों के बारे में AI से पूछें', te: 'ఈ పంటల గురించి AI ని అడగండి' },
+  
   // Common
   'language': { en: 'Language', hi: 'भाषा', te: 'భాష' },
   'english': { en: 'English', hi: 'अंग्रेज़ी', te: 'ఆంగ్లం' },
