@@ -1,1 +1,16 @@
 project_id = "vkelsfygrametpjzijrv"
+
+[functions.crop-suggest]
+verify_jwt = false
+
+[functions.chat-farming]
+verify_jwt = false
+
+[functions.get-weather]
+verify_jwt = false
+
+[functions.elevenlabs-scribe-token]
+verify_jwt = false
+
+[functions.elevenlabs-transcribe]
+verify_jwt = false
