@@ -4,9 +4,10 @@ import { ChatBox } from '@/components/ChatBox';
 import { WeatherCard } from '@/components/WeatherCard';
 import { CropSuggestionForm } from '@/components/CropSuggestionForm';
 import { CropImageAnalysis } from '@/components/CropImageAnalysis';
+import { PestAdvisory } from '@/components/PestAdvisory';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MessageSquare, Leaf, Camera } from 'lucide-react';
+import { MessageSquare, Leaf, Camera, Bug } from 'lucide-react';
 
 const Chat = () => {
   const { t, language } = useLanguage();
@@ -23,6 +24,11 @@ const Chat = () => {
     setActiveTab('chat');
   };
 
+  const handlePestAdvisoryComplete = (summary: string) => {
+    setPendingMessage(summary);
+    setActiveTab('chat');
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -33,20 +39,25 @@ const Chat = () => {
             {/* Main Content Area with Tabs */}
             <div className="lg:col-span-2 bg-card rounded-xl border border-border overflow-hidden flex flex-col">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-full">
-                <TabsList className="grid w-full grid-cols-3 rounded-none border-b border-border bg-muted/50">
-                  <TabsTrigger value="chat" className="flex items-center gap-2 text-xs sm:text-sm">
+                <TabsList className="grid w-full grid-cols-4 rounded-none border-b border-border bg-muted/50">
+                  <TabsTrigger value="chat" className="flex items-center gap-1 text-xs sm:text-sm px-2">
                     <MessageSquare className="h-4 w-4" />
                     <span className="hidden sm:inline">{language === 'hi' ? 'AI चैट' : language === 'te' ? 'AI చాట్' : 'AI Chat'}</span>
                     <span className="sm:hidden">{language === 'hi' ? 'चैट' : 'Chat'}</span>
                   </TabsTrigger>
-                  <TabsTrigger value="crops" className="flex items-center gap-2 text-xs sm:text-sm">
+                  <TabsTrigger value="crops" className="flex items-center gap-1 text-xs sm:text-sm px-2">
                     <Leaf className="h-4 w-4" />
-                    <span className="hidden sm:inline">{language === 'hi' ? 'फसल सुझाव' : language === 'te' ? 'పంట సూచన' : 'Crop Suggest'}</span>
+                    <span className="hidden sm:inline">{language === 'hi' ? 'फसल' : language === 'te' ? 'పంట' : 'Crops'}</span>
                     <span className="sm:hidden">{language === 'hi' ? 'फसल' : 'Crops'}</span>
                   </TabsTrigger>
-                  <TabsTrigger value="disease" className="flex items-center gap-2 text-xs sm:text-sm">
+                  <TabsTrigger value="pest" className="flex items-center gap-1 text-xs sm:text-sm px-2">
+                    <Bug className="h-4 w-4" />
+                    <span className="hidden sm:inline">{language === 'hi' ? 'कीट' : language === 'te' ? 'పురుగు' : 'Pest'}</span>
+                    <span className="sm:hidden">{language === 'hi' ? 'कीट' : 'Pest'}</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="disease" className="flex items-center gap-1 text-xs sm:text-sm px-2">
                     <Camera className="h-4 w-4" />
-                    <span className="hidden sm:inline">{language === 'hi' ? 'रोग पहचान' : language === 'te' ? 'వ్యాధి గుర్తింపు' : 'Disease ID'}</span>
+                    <span className="hidden sm:inline">{language === 'hi' ? 'रोग' : language === 'te' ? 'వ్యాధి' : 'Disease'}</span>
                     <span className="sm:hidden">{language === 'hi' ? 'रोग' : 'Disease'}</span>
                   </TabsTrigger>
                 </TabsList>
@@ -57,6 +68,10 @@ const Chat = () => {
                 
                 <TabsContent value="crops" className="flex-1 overflow-auto m-0 p-4">
                   <CropSuggestionForm onSuggestionComplete={handleCropSuggestionComplete} />
+                </TabsContent>
+                
+                <TabsContent value="pest" className="flex-1 overflow-auto m-0 p-4">
+                  <PestAdvisory onAdvisoryComplete={handlePestAdvisoryComplete} />
                 </TabsContent>
                 
                 <TabsContent value="disease" className="flex-1 overflow-auto m-0 p-4">

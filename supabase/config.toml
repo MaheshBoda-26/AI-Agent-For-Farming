@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.mandi-prices]
 verify_jwt = false
+
+[functions.pest-advisory]
+verify_jwt = false
