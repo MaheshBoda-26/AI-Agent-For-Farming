@@ -14,6 +14,7 @@ const translations: Translations = {
   // Navigation
   'nav.home': { en: 'Home', hi: 'होम', te: 'హోమ్' },
   'nav.chat': { en: 'Chat', hi: 'चैट', te: 'చాట్' },
+  'nav.tools': { en: 'Tools', hi: 'उपकरण', te: 'సాధనాలు' },
   'nav.weather': { en: 'Weather', hi: 'मौसम', te: 'వాతావరణం' },
   'nav.market': { en: 'Market', hi: 'मंडी', te: 'మార్కెట్' },
   
