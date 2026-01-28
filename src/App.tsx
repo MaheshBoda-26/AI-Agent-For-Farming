@@ -8,6 +8,7 @@ import { LanguageSelectDialog } from "@/components/LanguageSelectDialog";
 import { AssistantWidget } from "@/components/AssistantWidget";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
+import Tools from "./pages/Tools";
 import MarketPrices from "./pages/MarketPrices";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/tools" element={<Tools />} />
               <Route path="/market" element={<MarketPrices />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
