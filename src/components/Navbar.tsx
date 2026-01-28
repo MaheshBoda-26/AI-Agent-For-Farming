@@ -14,7 +14,9 @@ export const Navbar = () => {
   const navLinks = [
     { path: '/', label: t('nav.home') },
     { path: '/chat', label: t('nav.chat') },
-    { path: '/tools', label: t('nav.tools') },
+    { path: '/crops', label: t('nav.crops') },
+    { path: '/pest', label: t('nav.pest') },
+    { path: '/disease', label: t('nav.disease') },
     { path: '/market', label: t('nav.market') },
   ];
 
