@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, Bug, CheckCircle, Camera, Loader2, RefreshCw, Shield, Info } from 'lucide-react';
+import { AlertTriangle, Bug, CheckCircle, Camera, Loader2, RefreshCw, Shield, Info, FlaskConical } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface PestAdvisoryProps {
@@ -46,7 +46,9 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       confidence: 'Confidence',
       riskLevel: 'Risk Level',
       reasons: 'Why This Pest',
-      actions: 'Immediate Actions',
+      actions: 'Organic & Mechanical Controls',
+      chemicalOptions: 'Chemical Options',
+      chemicalDisclaimer: '⚠️ Consult local agriculture officer for dosage',
       prevention: 'Prevention',
       riskNote: 'Risk Warning',
       followUp: 'When to Seek Help',
@@ -69,7 +71,9 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       confidence: 'विश्वास स्तर',
       riskLevel: 'जोखिम स्तर',
       reasons: 'यह कीट क्यों',
-      actions: 'तुरंत कार्रवाई',
+      actions: 'जैविक एवं यांत्रिक नियंत्रण',
+      chemicalOptions: 'रासायनिक विकल्प',
+      chemicalDisclaimer: '⚠️ खुराक के लिए स्थानीय कृषि अधिकारी से सलाह लें',
       prevention: 'रोकथाम',
       riskNote: 'जोखिम चेतावनी',
       followUp: 'विशेषज्ञ से कब मिलें',
@@ -92,7 +96,9 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       confidence: 'నమ్మకం',
       riskLevel: 'ప్రమాద స్థాయి',
       reasons: 'ఈ పురుగు ఎందుకు',
-      actions: 'తక్షణ చర్యలు',
+      actions: 'సేంద్రీయ & యాంత్రిక నియంత్రణలు',
+      chemicalOptions: 'రసాయన ఎంపికలు',
+      chemicalDisclaimer: '⚠️ మోతాదు కోసం స్థానిక వ్యవసాయ అధికారిని సంప్రదించండి',
       prevention: 'నివారణ',
       riskNote: 'ప్రమాద హెచ్చరిక',
       followUp: 'నిపుణుని ఎప్పుడు కలవాలి',
@@ -160,15 +166,6 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
     return 'bg-red-500';
   };
 
-  const getRiskBadgeVariant = (risk: string): 'default' | 'secondary' | 'destructive' | 'outline' => {
-    switch (risk?.toLowerCase()) {
-      case 'severe': return 'destructive';
-      case 'high': return 'destructive';
-      case 'moderate': return 'secondary';
-      default: return 'outline';
-    }
-  };
-
   if (result) {
     return (
       <div className="space-y-4">
@@ -223,7 +220,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
               </Card>
             )}
 
-            {/* Immediate Actions */}
+            {/* Organic & Mechanical Actions */}
             {result.actions && result.actions.length > 0 && (
               <Card className="border-green-200 bg-green-50/50 dark:bg-green-950/20">
                 <CardHeader className="py-3">
@@ -238,6 +235,30 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                       <li key={idx}>{action}</li>
                     ))}
                   </ul>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Chemical Options */}
+            {result.chemical_options && result.chemical_options.length > 0 && (
+              <Card className="border-amber-200 bg-amber-50/50 dark:bg-amber-950/20">
+                <CardHeader className="py-3">
+                  <CardTitle className="text-sm flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                    <FlaskConical className="h-4 w-4" />
+                    {t.chemicalOptions}
+                  </CardTitle>
+                  <CardDescription className="text-xs text-amber-600 dark:text-amber-500">
+                    {t.chemicalDisclaimer}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="py-2">
+                  <div className="flex flex-wrap gap-2">
+                    {result.chemical_options.map((chemical, idx) => (
+                      <Badge key={idx} variant="secondary" className="bg-amber-100 dark:bg-amber-900/30">
+                        {chemical}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             )}

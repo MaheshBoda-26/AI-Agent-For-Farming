@@ -22,6 +22,7 @@ export interface PestAdvisoryResult {
   pest_type?: string;
   reasons: string[];
   actions: string[];
+  chemical_options?: string[];
   prevention: string[];
   risk_note: string;
   follow_up?: string;
