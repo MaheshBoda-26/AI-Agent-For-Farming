@@ -54,6 +54,8 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
     const cropNames = suggestions.map(s => language === 'hi' ? s.name_hi : s.name).join(', ');
     return language === 'hi' 
       ? `आपके लिए सुझाई गई फसलें: ${cropNames}`
+      : language === 'te'
+      ? `మీ కోసం సిఫార్సు చేసిన పంటలు: ${cropNames}`
       : `Recommended crops for you: ${cropNames}`;
   };
 
@@ -75,7 +77,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Leaf className="h-5 w-5 text-primary" />
-            {language === 'hi' ? 'फसल सुझाव इंजन' : 'Crop Suggestion Engine'}
+            {t('crop.suggest.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -84,14 +86,14 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
               {/* State Selection */}
               <div className="space-y-2">
                 <Label htmlFor="state">
-                  {language === 'hi' ? 'राज्य' : 'State'}
+                  {t('crop.suggest.state')}
                 </Label>
                 <Select
                   value={formData.state}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, state: value }))}
                 >
                   <SelectTrigger id="state">
-                    <SelectValue placeholder={language === 'hi' ? 'राज्य चुनें' : 'Select state'} />
+                    <SelectValue placeholder={t('crop.suggest.selectState')} />
                   </SelectTrigger>
                   <SelectContent>
                     {INDIAN_STATES.map((state) => (
@@ -106,14 +108,14 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
               {/* Soil Type Selection */}
               <div className="space-y-2">
                 <Label htmlFor="soil">
-                  {language === 'hi' ? 'मिट्टी का प्रकार' : 'Soil Type'}
+                  {t('crop.suggest.soil')}
                 </Label>
                 <Select
                   value={formData.soil_type}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, soil_type: value }))}
                 >
                   <SelectTrigger id="soil">
-                    <SelectValue placeholder={language === 'hi' ? 'मिट्टी चुनें' : 'Select soil'} />
+                    <SelectValue placeholder={t('crop.suggest.selectSoil')} />
                   </SelectTrigger>
                   <SelectContent>
                     {SOIL_TYPES.map((soil) => (
@@ -128,7 +130,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
               {/* Season Selection */}
               <div className="space-y-2">
                 <Label htmlFor="season">
-                  {language === 'hi' ? 'मौसम' : 'Season'}
+                  {t('crop.suggest.season')}
                 </Label>
                 <Select
                   value={formData.season}
@@ -151,10 +153,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
               <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
                 <Info className="h-4 w-4" />
                 <span>
-                  {language === 'hi' 
-                    ? `वर्तमान तापमान: ${weather.current.temp}°C | मौसम: ${weather.current.condition}`
-                    : `Current: ${weather.current.temp}°C | ${weather.current.condition}`
-                  }
+                  {t('crop.suggest.currentTemp')}: {weather.current.temp}°C | {weather.current.condition}
                 </span>
               </div>
             )}
@@ -167,10 +166,10 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {language === 'hi' ? 'विश्लेषण हो रहा है...' : 'Analyzing...'}
+                  {t('crop.suggest.analyzing')}
                 </>
               ) : (
-                language === 'hi' ? 'फसल सुझाव प्राप्त करें' : 'Get Crop Suggestions'
+                t('crop.suggest.button')
               )}
             </Button>
           </form>
@@ -195,7 +194,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
           {suggestions.length > 0 && (
             <div className="mt-4 space-y-3">
               <h4 className="font-semibold text-foreground">
-                {language === 'hi' ? 'सुझाई गई फसलें' : 'Recommended Crops'}
+                {t('crop.suggest.results')}
               </h4>
               
               {suggestions.map((crop, index) => (
@@ -208,7 +207,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
                             #{index + 1} {language === 'hi' ? crop.name_hi : crop.name}
                           </span>
                           <span className={`text-sm font-medium ${getConfidenceColor(crop.confidence)}`}>
-                            {crop.confidence}% {language === 'hi' ? 'उपयुक्त' : 'suitable'}
+                            {crop.confidence}% {t('crop.suggest.suitable')}
                           </span>
                         </div>
                         
@@ -240,7 +239,7 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
                   className="w-full"
                   onClick={() => onSuggestionComplete(getSummaryText())}
                 >
-                  {language === 'hi' ? 'इस बारे में AI से पूछें' : 'Ask AI about these crops'}
+                  {t('crop.suggest.ask')}
                 </Button>
               )}
             </div>

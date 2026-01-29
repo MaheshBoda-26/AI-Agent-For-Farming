@@ -14,7 +14,7 @@ interface CropImageAnalysisProps {
 }
 
 export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps) => {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { analysis, isLoading, error, analyzeImage, reset } = useCropImageAnalysis();
   
@@ -28,13 +28,13 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      alert(language === 'hi' ? 'कृपया केवल छवि फ़ाइलें अपलोड करें' : 'Please upload only image files');
+      alert(t('disease.imageOnly'));
       return;
     }
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      alert(language === 'hi' ? 'फ़ाइल का आकार 10MB से कम होना चाहिए' : 'File size must be less than 10MB');
+      alert(t('disease.fileSizeError'));
       return;
     }
 
@@ -67,7 +67,7 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
       setSelectedImage(publicUrl);
     } catch (err) {
       console.error('Upload error:', err);
-      alert(language === 'hi' ? 'छवि अपलोड करने में विफल' : 'Failed to upload image');
+      alert(t('disease.uploadFailed'));
     } finally {
       setUploadProgress(false);
     }
@@ -91,7 +91,7 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
     if (!analysis) return '';
     // Extract first line or problem identification for chat
     const firstLine = analysis.split('\n').find(line => line.includes('Identified Problem') || line.includes('पहचानी गई समस्या'));
-    return firstLine || (language === 'hi' ? 'फसल विश्लेषण पूर्ण' : 'Crop analysis complete');
+    return firstLine || t('disease.analysisComplete');
   };
 
   return (
@@ -100,7 +100,7 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Bug className="h-5 w-5 text-primary" />
-            {language === 'hi' ? 'फसल रोग/कीट पहचान' : 'Crop Disease/Pest Identification'}
+            {t('disease.title')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -123,7 +123,7 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
                 <div className="flex flex-col items-center gap-3">
                   <Loader2 className="h-12 w-12 text-primary animate-spin" />
                   <p className="text-muted-foreground">
-                    {language === 'hi' ? 'अपलोड हो रहा है...' : 'Uploading...'}
+                    {t('disease.uploading')}
                   </p>
                 </div>
               ) : (
@@ -138,12 +138,10 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
                   </div>
                   <div>
                     <p className="font-medium text-foreground">
-                      {language === 'hi' ? 'फसल की फोटो लें या अपलोड करें' : 'Take or Upload Crop Photo'}
+                      {t('disease.takeUpload')}
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      {language === 'hi' 
-                        ? 'रोगग्रस्त पत्तियों, तने या फल की स्पष्ट फोटो लें'
-                        : 'Take a clear photo of affected leaves, stems, or fruits'}
+                      {t('disease.clearPhoto')}
                     </p>
                   </div>
                 </div>
@@ -171,15 +169,13 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
           {selectedImage && !analysis && (
             <div className="space-y-2">
               <Label htmlFor="additionalInfo">
-                {language === 'hi' ? 'अतिरिक्त जानकारी (वैकल्पिक)' : 'Additional Information (Optional)'}
+                {t('disease.additionalInfo')}
               </Label>
               <Textarea
                 id="additionalInfo"
                 value={additionalInfo}
                 onChange={(e) => setAdditionalInfo(e.target.value)}
-                placeholder={language === 'hi' 
-                  ? 'फसल का नाम, लक्षण कब दिखे, आदि...'
-                  : 'Crop name, when symptoms appeared, etc...'}
+                placeholder={t('disease.additionalPlaceholder')}
                 rows={2}
               />
             </div>
@@ -195,12 +191,12 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {language === 'hi' ? 'विश्लेषण हो रहा है...' : 'Analyzing...'}
+                  {t('disease.analyzing')}
                 </>
               ) : (
                 <>
                   <Leaf className="mr-2 h-4 w-4" />
-                  {language === 'hi' ? 'छवि का विश्लेषण करें' : 'Analyze Image'}
+                  {t('disease.analyze')}
                 </>
               )}
             </Button>
@@ -227,14 +223,14 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
                   className="flex-1"
                   onClick={handleClear}
                 >
-                  {language === 'hi' ? 'नई छवि' : 'New Image'}
+                  {t('disease.newImage')}
                 </Button>
                 {onAnalysisComplete && (
                   <Button
                     className="flex-1"
                     onClick={() => onAnalysisComplete(getSummaryForChat())}
                   >
-                    {language === 'hi' ? 'AI से और पूछें' : 'Ask AI More'}
+                    {t('disease.askMore')}
                   </Button>
                 )}
               </div>
@@ -248,13 +244,13 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
         <Card>
           <CardContent className="pt-4">
             <h4 className="font-medium text-foreground mb-2">
-              {language === 'hi' ? '📸 अच्छी फोटो के लिए सुझाव' : '📸 Tips for Good Photos'}
+              📸 {t('disease.tips')}
             </h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• {language === 'hi' ? 'प्रभावित भाग को करीब से लें' : 'Take close-up of affected parts'}</li>
-              <li>• {language === 'hi' ? 'अच्छी रोशनी में फोटो लें' : 'Use good lighting'}</li>
-              <li>• {language === 'hi' ? 'पत्ती के दोनों तरफ की फोटो लें' : 'Capture both sides of leaves'}</li>
-              <li>• {language === 'hi' ? 'कई प्रभावित पौधों की फोटो लें' : 'Include multiple affected plants'}</li>
+              <li>• {t('disease.tip1')}</li>
+              <li>• {t('disease.tip2')}</li>
+              <li>• {t('disease.tip3')}</li>
+              <li>• {t('disease.tip4')}</li>
             </ul>
           </CardContent>
         </Card>
