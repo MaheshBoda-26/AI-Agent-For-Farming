@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { PestAdvisory } from '@/components/PestAdvisory';
+import { FertilizerAdvisory } from '@/components/FertilizerAdvisory';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Bug, Leaf } from 'lucide-react';
 
 const PestAdvisoryPage = () => {
   const { language } = useLanguage();
@@ -12,9 +15,24 @@ const PestAdvisoryPage = () => {
   };
 
   const labels = {
-    en: { title: 'Pest Advisory', subtitle: 'Identify pests and get safe control recommendations' },
-    hi: { title: 'कीट सलाह', subtitle: 'कीटों की पहचान करें और सुरक्षित नियंत्रण सुझाव प्राप्त करें' },
-    te: { title: 'పురుగు సలహా', subtitle: 'పురుగులను గుర్తించండి మరియు సురక్షిత నియంత్రణ సిఫార్సులు పొందండి' },
+    en: { 
+      title: 'Crop Advisory', 
+      subtitle: 'Get pest control and fertilizer recommendations',
+      pestTab: 'Pest Advisory',
+      fertilizerTab: 'Fertilizer Advisory',
+    },
+    hi: { 
+      title: 'फसल सलाह', 
+      subtitle: 'कीट नियंत्रण और उर्वरक सिफारिशें प्राप्त करें',
+      pestTab: 'कीट सलाह',
+      fertilizerTab: 'उर्वरक सलाह',
+    },
+    te: { 
+      title: 'పంట సలహా', 
+      subtitle: 'పురుగుల నియంత్రణ మరియు ఎరువుల సిఫార్సులు పొందండి',
+      pestTab: 'పురుగు సలహా',
+      fertilizerTab: 'ఎరువుల సలహా',
+    },
   };
 
   const t = labels[language as keyof typeof labels] || labels.en;
@@ -29,7 +47,24 @@ const PestAdvisoryPage = () => {
             <p className="text-muted-foreground mt-1">{t.subtitle}</p>
           </div>
           <div className="max-w-2xl mx-auto">
-            <PestAdvisory onAdvisoryComplete={handleComplete} />
+            <Tabs defaultValue="pest" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="pest" className="flex items-center gap-2">
+                  <Bug className="h-4 w-4" />
+                  {t.pestTab}
+                </TabsTrigger>
+                <TabsTrigger value="fertilizer" className="flex items-center gap-2">
+                  <Leaf className="h-4 w-4" />
+                  {t.fertilizerTab}
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="pest">
+                <PestAdvisory onAdvisoryComplete={handleComplete} />
+              </TabsContent>
+              <TabsContent value="fertilizer">
+                <FertilizerAdvisory onAdvisoryComplete={handleComplete} />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
