@@ -265,41 +265,45 @@ serve(async (req) => {
     const topPest = candidates[0];
     const lang = input.language || "en";
     
-    // Build prompt for AI advisory generation
-    const systemPrompt = `You are an expert agricultural pathologist specializing in Indian crops. Generate a detailed pest advisory based on the identified pest.
+    // Language instructions
+    const langInstructions = {
+      hi: "जवाब हिंदी में दें। सरल शब्दों का प्रयोग करें जो किसान समझ सकें।",
+      te: "తెలుగులో సమాధానం ఇవ్వండి. రైతులు అర్థం చేసుకోగల సరళమైన పదాలు ఉపయోగించండి.",
+      en: "Respond in simple English that farmers can easily understand."
+    };
+    
+    // Build prompt for AI advisory generation - SIMPLE and SHORT
+    const systemPrompt = `You are a helpful farming expert. Give SHORT, SIMPLE advice that farmers can understand easily.
 
 RULES:
 1. Respond ONLY in valid JSON format
-2. Do NOT include specific chemical dosage quantities - only mention pesticide NAMES
-3. Provide India-specific advice with locally available products
-4. Use simple farmer-friendly language
-5. ${lang === "hi" ? "Respond in Hindi" : lang === "te" ? "Respond in Telugu" : "Respond in English"}
-6. Always prioritize organic/mechanical controls first
-7. Chemical pesticides should be listed separately with a warning to consult local agriculture officer for dosage
+2. Keep each point to 1 SHORT sentence (max 15 words)
+3. Use simple words, no technical jargon
+4. Maximum 3 points per section
+5. ${langInstructions[lang as keyof typeof langInstructions] || langInstructions.en}
+6. NO chemical dosages - just pesticide names
 
 OUTPUT FORMAT (strict JSON):
 {
-  "pest_name": "string",
-  "pest_name_local": "string in ${lang === "hi" ? "Hindi" : lang === "te" ? "Telugu" : "English"}",
-  "confidence": number (0-1),
-  "pest_type": "string",
-  "reasons": ["why this pest matches the symptoms"],
-  "actions": ["immediate organic/mechanical actions - neem spray, traps, manual removal, etc."],
-  "chemical_options": ["list pesticide NAMES only like Imidacloprid, Chlorpyrifos, etc. - NO dosages"],
-  "prevention": ["future prevention steps including resistant varieties, crop rotation, etc."],
-  "risk_note": "what happens if ignored",
-  "follow_up": "when to seek expert help"
+  "pest_name": "name",
+  "pest_name_local": "name in local language",
+  "confidence": 0.8,
+  "pest_type": "insect/fungal/bacterial",
+  "reasons": ["short reason 1", "short reason 2"],
+  "actions": ["do this first", "then do this", "finally do this"],
+  "chemical_options": ["Pesticide Name 1", "Pesticide Name 2"],
+  "prevention": ["tip 1", "tip 2"],
+  "risk_note": "one sentence warning",
+  "follow_up": "when to call expert"
 }`;
 
-    const userPrompt = `Identified pest: ${topPest.pest_name}
+    const userPrompt = `Pest: ${topPest.pest_name}
 Crop: ${input.crop_name}
-Growth stage: ${input.growth_stage}
-Farmer's symptoms: ${input.symptoms_text}
-Matched symptoms from database: ${topPest.matched_symptoms.join(", ")}
-Confidence score from rule engine: ${(topPest.score * 100).toFixed(0)}%
-Risk level: ${topPest.risk_level}
+Stage: ${input.growth_stage}
+Problem: ${input.symptoms_text}
+Confidence: ${(topPest.score * 100).toFixed(0)}%
 
-Generate a comprehensive advisory for this pest.`;
+Give simple advice.`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
