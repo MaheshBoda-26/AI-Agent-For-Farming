@@ -45,12 +45,12 @@ export const ChatBox = ({ initialMessage, onMessageSent }: ChatBoxProps) => {
   useEffect(() => {
     if (error) {
       toast({
-        title: language === 'hi' ? 'त्रुटि' : 'Error',
+        title: t('common.error'),
         description: error,
         variant: 'destructive',
       });
     }
-  }, [error, language, toast]);
+  }, [error, t, toast]);
 
   // Show welcome message
   const displayMessages = messages.length === 0
@@ -80,9 +80,9 @@ export const ChatBox = ({ initialMessage, onMessageSent }: ChatBoxProps) => {
           <Leaf className="h-5 w-5 text-primary-foreground" />
         </div>
         <div className="flex-1">
-          <h2 className="font-semibold text-foreground">AI Farming Assistant</h2>
+          <h2 className="font-semibold text-foreground">{t('chat.header.title')}</h2>
           <p className="text-xs text-muted-foreground">
-            {isLoading ? t('chat.thinking') : 'Powered by AI'}
+            {isLoading ? t('chat.thinking') : t('chat.header.powered')}
           </p>
         </div>
         {messages.length > 0 && (

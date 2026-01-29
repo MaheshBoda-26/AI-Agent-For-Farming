@@ -64,11 +64,11 @@ export const WeatherCard = () => {
         <CardContent>
           <div className="text-center py-4">
             <p className="text-muted-foreground text-sm mb-3">
-              {error || 'Unable to load weather data'}
+              {error || t('weather.error')}
             </p>
             <Button variant="outline" size="sm" onClick={refetch}>
               <RefreshCw className="h-4 w-4 mr-2" />
-              Retry
+              {t('common.retry')}
             </Button>
           </div>
         </CardContent>

@@ -18,7 +18,7 @@ import {
 import { Area, AreaChart, XAxis, YAxis } from 'recharts';
 
 export default function MarketPrices() {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: apiData, isLoading, error, fetchPrices } = useMandiPrices();
   
   const [selectedCrop, setSelectedCrop] = useState<string>('');
@@ -78,7 +78,7 @@ export default function MarketPrices() {
 
   const chartConfig = {
     price: {
-      label: language === 'hi' ? 'कीमत' : 'Price',
+      label: t('market.price'),
       color: 'hsl(var(--primary))',
     },
   };
@@ -93,12 +93,10 @@ export default function MarketPrices() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                {language === 'hi' ? 'मंडी भाव' : 'Mandi Prices'}
+                {t('market.title')}
               </h1>
               <p className="text-muted-foreground">
-                {language === 'hi' 
-                  ? 'विभिन्न फसलों के वर्तमान बाजार भाव और रुझान देखें'
-                  : 'View current market prices and trends for different crops'}
+                {t('market.subtitle')}
               </p>
             </div>
             
@@ -111,12 +109,12 @@ export default function MarketPrices() {
                 {isLiveData ? (
                   <>
                     <Wifi className="h-3 w-3 mr-1" />
-                    {language === 'hi' ? 'लाइव डेटा' : 'Live Data'}
+                    {t('market.liveData')}
                   </>
                 ) : (
                   <>
                     <WifiOff className="h-3 w-3 mr-1" />
-                    {language === 'hi' ? 'डेमो डेटा' : 'Demo Data'}
+                    {t('market.demoData')}
                   </>
                 )}
               </Badge>
@@ -127,14 +125,14 @@ export default function MarketPrices() {
                 disabled={isLoading}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                {language === 'hi' ? 'ताज़ा करें' : 'Refresh'}
+                {t('market.refresh')}
               </Button>
             </div>
           </div>
           
           {lastUpdated && (
             <p className="text-xs text-muted-foreground mt-2">
-              {language === 'hi' ? 'अंतिम अपडेट:' : 'Last updated:'} {lastUpdated}
+              {t('market.lastUpdated')}: {lastUpdated}
             </p>
           )}
         </div>
@@ -143,11 +141,11 @@ export default function MarketPrices() {
         <div className="flex flex-wrap gap-4 mb-8">
           <Select value={selectedCrop || "all"} onValueChange={(val) => setSelectedCrop(val === "all" ? "" : val)}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder={language === 'hi' ? 'फसल चुनें' : 'Select Crop'} />
+              <SelectValue placeholder={t('market.selectCrop')} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">
-                {language === 'hi' ? 'सभी फसलें' : 'All Crops'}
+                {t('market.allCrops')}
               </SelectItem>
               {crops.map(crop => (
                 <SelectItem key={crop} value={crop}>{crop}</SelectItem>
@@ -157,11 +155,11 @@ export default function MarketPrices() {
 
           <Select value={selectedState || "all"} onValueChange={(val) => setSelectedState(val === "all" ? "" : val)}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder={language === 'hi' ? 'राज्य चुनें' : 'Select State'} />
+              <SelectValue placeholder={t('market.selectState')} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">
-                {language === 'hi' ? 'सभी राज्य' : 'All States'}
+                {t('market.allStates')}
               </SelectItem>
               {states.map(state => (
                 <SelectItem key={state} value={state}>{state}</SelectItem>
@@ -192,7 +190,7 @@ export default function MarketPrices() {
           <Card className="mb-8 border-destructive">
             <CardContent className="p-4">
               <p className="text-destructive">
-                {language === 'hi' ? 'डेटा लोड करने में त्रुटि:' : 'Error loading data:'} {error}
+                {t('market.errorLoading')}: {error}
               </p>
             </CardContent>
           </Card>
@@ -204,10 +202,10 @@ export default function MarketPrices() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                {language === 'hi' ? `${trend.crop_name_hi} मूल्य रुझान` : `${trend.crop_name} Price Trend`}
+                {language === 'hi' ? `${trend.crop_name_hi} ${t('market.priceTrend')}` : `${trend.crop_name} ${t('market.priceTrend')}`}
               </CardTitle>
               <CardDescription>
-                {language === 'hi' ? 'पिछले 6 महीने का मूल्य इतिहास' : 'Price history for the last 6 months'}
+                {t('market.priceHistory')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -250,20 +248,20 @@ export default function MarketPrices() {
                 <div className="space-y-4">
                   <div className="p-4 rounded-lg bg-muted/50">
                     <p className="text-sm text-muted-foreground mb-1">
-                      {language === 'hi' ? 'वर्तमान कीमत' : 'Current Price'}
+                      {t('market.currentPrice')}
                     </p>
                     <p className="text-2xl font-bold text-foreground flex items-center">
                       <IndianRupee className="h-5 w-5" />
                       {trend.current_price}/
                       <span className="text-sm font-normal text-muted-foreground">
-                        {language === 'hi' ? 'क्विंटल' : 'quintal'}
+                        {t('market.quintal')}
                       </span>
                     </p>
                   </div>
 
                   <div className="p-4 rounded-lg bg-muted/50">
                     <p className="text-sm text-muted-foreground mb-1">
-                      {language === 'hi' ? 'बेचने का सबसे अच्छा समय' : 'Best Selling Time'}
+                      {t('market.bestTime')}
                     </p>
                     <p className="text-lg font-semibold text-foreground flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-primary" />
@@ -273,7 +271,7 @@ export default function MarketPrices() {
 
                   <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
                     <p className="text-sm font-medium text-primary mb-1">
-                      {language === 'hi' ? 'सिफारिश' : 'Recommendation'}
+                      {t('market.recommendation')}
                     </p>
                     <p className="text-sm text-foreground">
                       {language === 'hi' ? trend.recommendation_hi : trend.recommendation}
@@ -312,19 +310,19 @@ export default function MarketPrices() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
-                        {language === 'hi' ? 'न्यूनतम' : 'Min'}
+                        {t('market.min')}
                       </span>
                       <span className="font-medium">₹{price.min_price}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
-                        {language === 'hi' ? 'अधिकतम' : 'Max'}
+                        {t('market.max')}
                       </span>
                       <span className="font-medium">₹{price.max_price}</span>
                     </div>
                     <div className="flex justify-between text-sm border-t pt-2">
                       <span className="font-medium text-foreground">
-                        {language === 'hi' ? 'मोडल भाव' : 'Modal Price'}
+                        {t('market.modalPrice')}
                       </span>
                       <span className="font-bold text-primary">₹{price.modal_price}/q</span>
                     </div>
@@ -338,9 +336,7 @@ export default function MarketPrices() {
         {!isLoading && filteredPrices.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              {language === 'hi' 
-                ? 'चयनित फ़िल्टर के लिए कोई डेटा उपलब्ध नहीं है'
-                : 'No data available for selected filters'}
+              {t('market.noData')}
             </p>
           </div>
         )}
@@ -349,15 +345,11 @@ export default function MarketPrices() {
         <Card className="mt-8 bg-muted/30">
           <CardContent className="p-4">
             <p className="text-sm text-muted-foreground">
-              <strong>{language === 'hi' ? 'नोट:' : 'Note:'}</strong>{' '}
-              {language === 'hi' 
-                ? 'कीमतें प्रति क्विंटल (100 किलो) में हैं। वास्तविक कीमतें स्थानीय मंडी में भिन्न हो सकती हैं।'
-                : 'Prices are per quintal (100 kg). Actual prices may vary at local mandis.'}
+              <strong>{t('market.note')}:</strong>{' '}
+              {t('market.disclaimer')}
               {isLiveData && (
                 <span className="block mt-1">
-                  {language === 'hi' 
-                    ? 'डेटा स्रोत: data.gov.in (Open Government Data Platform)'
-                    : 'Data source: data.gov.in (Open Government Data Platform)'}
+                  {t('market.dataSource')}
                 </span>
               )}
             </p>

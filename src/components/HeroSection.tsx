@@ -24,7 +24,7 @@ export const HeroSection = () => {
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm mb-6">
             <span className="animate-pulse">🌱</span>
-            <span>Powered by AI • Available in Hindi & English</span>
+            <span>{t('hero.badge')}</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground mb-6 leading-tight">
@@ -52,15 +52,15 @@ export const HeroSection = () => {
           <div className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-border/50">
             <div>
               <p className="text-3xl font-bold text-primary">50+</p>
-              <p className="text-sm text-muted-foreground">Crops Covered</p>
+              <p className="text-sm text-muted-foreground">{t('hero.stat.crops')}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-primary">28</p>
-              <p className="text-sm text-muted-foreground">States Supported</p>
+              <p className="text-sm text-muted-foreground">{t('hero.stat.states')}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-primary">24/7</p>
-              <p className="text-sm text-muted-foreground">AI Assistance</p>
+              <p className="text-sm text-muted-foreground">{t('hero.stat.assistance')}</p>
             </div>
           </div>
         </div>
