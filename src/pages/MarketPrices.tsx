@@ -9,13 +9,31 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, TrendingDown, Minus, IndianRupee, Calendar, MapPin, RefreshCw, Wifi, WifiOff } from 'lucide-react';
 import { useMandiPrices, MandiPrice } from '@/hooks/useMandiPrices';
-import { MANDI_PRICES, CROP_PRICE_TRENDS, getUniqueCrops, getUniqueStates, CropPriceTrend } from '@/data/mandiPrices';
+import { MANDI_PRICES, CROP_PRICE_TRENDS, getUniqueCrops, getUniqueStates, CropPriceTrend, getCropTranslations } from '@/data/mandiPrices';
+import { INDIAN_STATES_DATA } from '@/data/crops';
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { Area, AreaChart, XAxis, YAxis } from 'recharts';
+
+// Helper to get translated crop name from mandi data
+const getCropDisplayName = (cropName: string, language: string): string => {
+  const translations = getCropTranslations();
+  const crop = translations[cropName];
+  if (!crop) return cropName;
+  if (language === 'hi') return crop.hi;
+  if (language === 'te') return crop.te;
+  return crop.en;
+};
+
+// Helper to get translated state name
+const getStateDisplayName = (stateName: string, language: string): string => {
+  const state = INDIAN_STATES_DATA.find(s => s.value === stateName);
+  if (!state) return stateName;
+  return state[language as 'en' | 'hi' | 'te'] || state.en;
+};
 
 export default function MarketPrices() {
   const { t, language } = useLanguage();
@@ -148,7 +166,9 @@ export default function MarketPrices() {
                 {t('market.allCrops')}
               </SelectItem>
               {crops.map(crop => (
-                <SelectItem key={crop} value={crop}>{crop}</SelectItem>
+                <SelectItem key={crop} value={crop}>
+                  {getCropDisplayName(crop, language)}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -162,7 +182,9 @@ export default function MarketPrices() {
                 {t('market.allStates')}
               </SelectItem>
               {states.map(state => (
-                <SelectItem key={state} value={state}>{state}</SelectItem>
+                <SelectItem key={state} value={state}>
+                  {getStateDisplayName(state, language)}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
