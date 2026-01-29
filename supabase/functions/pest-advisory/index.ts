@@ -270,10 +270,12 @@ serve(async (req) => {
 
 RULES:
 1. Respond ONLY in valid JSON format
-2. Do NOT include chemical dosage quantities
-3. Provide India-specific advice
+2. Do NOT include specific chemical dosage quantities - only mention pesticide NAMES
+3. Provide India-specific advice with locally available products
 4. Use simple farmer-friendly language
 5. ${lang === "hi" ? "Respond in Hindi" : lang === "te" ? "Respond in Telugu" : "Respond in English"}
+6. Always prioritize organic/mechanical controls first
+7. Chemical pesticides should be listed separately with a warning to consult local agriculture officer for dosage
 
 OUTPUT FORMAT (strict JSON):
 {
@@ -282,8 +284,9 @@ OUTPUT FORMAT (strict JSON):
   "confidence": number (0-1),
   "pest_type": "string",
   "reasons": ["why this pest matches the symptoms"],
-  "actions": ["immediate non-chemical actions to take"],
-  "prevention": ["future prevention steps"],
+  "actions": ["immediate organic/mechanical actions - neem spray, traps, manual removal, etc."],
+  "chemical_options": ["list pesticide NAMES only like Imidacloprid, Chlorpyrifos, etc. - NO dosages"],
+  "prevention": ["future prevention steps including resistant varieties, crop rotation, etc."],
   "risk_note": "what happens if ignored",
   "follow_up": "when to seek expert help"
 }`;
