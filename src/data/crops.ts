@@ -283,29 +283,57 @@ export const CROPS_DATABASE: CropData[] = [
   }
 ];
 
-// All Indian states list
-export const INDIAN_STATES = [
-  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-  "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
-  "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-  "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
-  "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
-  "Uttar Pradesh", "Uttarakhand", "West Bengal"
+// All Indian states list with translations
+export const INDIAN_STATES_DATA: { value: string; en: string; hi: string; te: string }[] = [
+  { value: "Andhra Pradesh", en: "Andhra Pradesh", hi: "आंध्र प्रदेश", te: "ఆంధ్ర ప్రదేశ్" },
+  { value: "Arunachal Pradesh", en: "Arunachal Pradesh", hi: "अरुणाचल प्रदेश", te: "అరుణాచల్ ప్రదేశ్" },
+  { value: "Assam", en: "Assam", hi: "असम", te: "అస్సాం" },
+  { value: "Bihar", en: "Bihar", hi: "बिहार", te: "బీహార్" },
+  { value: "Chhattisgarh", en: "Chhattisgarh", hi: "छत्तीसगढ़", te: "ఛత్తీస్‌గఢ్" },
+  { value: "Goa", en: "Goa", hi: "गोवा", te: "గోవా" },
+  { value: "Gujarat", en: "Gujarat", hi: "गुजरात", te: "గుజరాత్" },
+  { value: "Haryana", en: "Haryana", hi: "हरियाणा", te: "హర్యానా" },
+  { value: "Himachal Pradesh", en: "Himachal Pradesh", hi: "हिमाचल प्रदेश", te: "హిమాచల్ ప్రదేశ్" },
+  { value: "Jharkhand", en: "Jharkhand", hi: "झारखंड", te: "జార్ఖండ్" },
+  { value: "Karnataka", en: "Karnataka", hi: "कर्नाटक", te: "కర్ణాటక" },
+  { value: "Kerala", en: "Kerala", hi: "केरल", te: "కేరళ" },
+  { value: "Madhya Pradesh", en: "Madhya Pradesh", hi: "मध्य प्रदेश", te: "మధ్య ప్రదేశ్" },
+  { value: "Maharashtra", en: "Maharashtra", hi: "महाराष्ट्र", te: "మహారాష్ట్ర" },
+  { value: "Manipur", en: "Manipur", hi: "मणिपुर", te: "మణిపూర్" },
+  { value: "Meghalaya", en: "Meghalaya", hi: "मेघालय", te: "మేఘాలయ" },
+  { value: "Mizoram", en: "Mizoram", hi: "मिजोरम", te: "మిజోరాం" },
+  { value: "Nagaland", en: "Nagaland", hi: "नागालैंड", te: "నాగాలాండ్" },
+  { value: "Odisha", en: "Odisha", hi: "ओडिशा", te: "ఒడిశా" },
+  { value: "Punjab", en: "Punjab", hi: "पंजाब", te: "పంజాబ్" },
+  { value: "Rajasthan", en: "Rajasthan", hi: "राजस्थान", te: "రాజస్థాన్" },
+  { value: "Sikkim", en: "Sikkim", hi: "सिक्किम", te: "సిక్కిం" },
+  { value: "Tamil Nadu", en: "Tamil Nadu", hi: "तमिलनाडु", te: "తమిళనాడు" },
+  { value: "Telangana", en: "Telangana", hi: "तेलंगाना", te: "తెలంగాణ" },
+  { value: "Tripura", en: "Tripura", hi: "त्रिपुरा", te: "త్రిపుర" },
+  { value: "Uttar Pradesh", en: "Uttar Pradesh", hi: "उत्तर प्रदेश", te: "ఉత్తర ప్రదేశ్" },
+  { value: "Uttarakhand", en: "Uttarakhand", hi: "उत्तराखंड", te: "ఉత్తరాఖండ్" },
+  { value: "West Bengal", en: "West Bengal", hi: "पश्चिम बंगाल", te: "పశ్చిమ బెంగాల్" }
 ];
 
-// Soil types in India
-export const SOIL_TYPES = [
-  "Alluvial",
-  "Black",
-  "Red",
-  "Laterite",
-  "Sandy",
-  "Sandy Loam",
-  "Loamy",
-  "Clay",
-  "Clayey Loam",
-  "Mountain"
+// Legacy export for backward compatibility
+export const INDIAN_STATES = INDIAN_STATES_DATA.map(s => s.value);
+
+// Soil types with translations
+export const SOIL_TYPES_DATA: { value: string; en: string; hi: string; te: string }[] = [
+  { value: "Alluvial", en: "Alluvial", hi: "जलोढ़ मिट्टी", te: "ఒండ్రు నేల" },
+  { value: "Black", en: "Black", hi: "काली मिट्टी", te: "నల్ల నేల" },
+  { value: "Red", en: "Red", hi: "लाल मिट्टी", te: "ఎర్ర నేల" },
+  { value: "Laterite", en: "Laterite", hi: "लैटेराइट मिट्टी", te: "లాటెరైట్ నేల" },
+  { value: "Sandy", en: "Sandy", hi: "बलुई मिट्टी", te: "ఇసుక నేల" },
+  { value: "Sandy Loam", en: "Sandy Loam", hi: "बलुई दोमट", te: "ఇసుక నేల మిశ్రమం" },
+  { value: "Loamy", en: "Loamy", hi: "दोमट मिट्टी", te: "లోమీ నేల" },
+  { value: "Clay", en: "Clay", hi: "चिकनी मिट्टी", te: "బంకమట్టి" },
+  { value: "Clayey Loam", en: "Clayey Loam", hi: "मटियार दोमट", te: "బంకమట్టి మిశ్రమం" },
+  { value: "Mountain", en: "Mountain", hi: "पर्वतीय मिट्टी", te: "పర్వత నేల" }
 ];
+
+// Legacy export for backward compatibility
+export const SOIL_TYPES = SOIL_TYPES_DATA.map(s => s.value);
 
 // Season determination based on month
 export function getCurrentSeason(month: number): 'Kharif' | 'Rabi' | 'Zaid' {
@@ -316,9 +344,23 @@ export function getCurrentSeason(month: number): 'Kharif' | 'Rabi' | 'Zaid' {
 
 export function getSeasonName(season: 'Kharif' | 'Rabi' | 'Zaid', language: string = 'en'): string {
   const names = {
-    Kharif: { en: 'Kharif (Monsoon)', hi: 'खरीफ (मानसून)' },
-    Rabi: { en: 'Rabi (Winter)', hi: 'रबी (सर्दी)' },
-    Zaid: { en: 'Zaid (Summer)', hi: 'जायद (गर्मी)' }
+    Kharif: { en: 'Kharif (Monsoon)', hi: 'खरीफ (मानसून)', te: 'ఖరీఫ్ (వర్షాకాలం)' },
+    Rabi: { en: 'Rabi (Winter)', hi: 'रबी (सर्दी)', te: 'రబీ (శీతాకాలం)' },
+    Zaid: { en: 'Zaid (Summer)', hi: 'जायद (गर्मी)', te: 'జైద్ (వేసవి)' }
   };
-  return names[season][language === 'hi' ? 'hi' : 'en'];
+  return names[season][(language as 'en' | 'hi' | 'te')] || names[season].en;
+}
+
+// Helper function to get translated state name
+export function getStateName(stateValue: string, language: string = 'en'): string {
+  const state = INDIAN_STATES_DATA.find(s => s.value === stateValue);
+  if (!state) return stateValue;
+  return state[(language as 'en' | 'hi' | 'te')] || state.en;
+}
+
+// Helper function to get translated soil type name
+export function getSoilTypeName(soilValue: string, language: string = 'en'): string {
+  const soil = SOIL_TYPES_DATA.find(s => s.value === soilValue);
+  if (!soil) return soilValue;
+  return soil[(language as 'en' | 'hi' | 'te')] || soil.en;
 }
