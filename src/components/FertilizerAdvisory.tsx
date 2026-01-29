@@ -149,9 +149,9 @@ export const FertilizerAdvisory = ({ onAdvisoryComplete }: FertilizerAdvisoryPro
 
         {/* Primary Fertilizers */}
         {result.primary_fertilizers && result.primary_fertilizers.length > 0 && (
-          <Card className="border-green-200 bg-green-50/50 dark:bg-green-950/20">
+          <Card className="border-green-500/30 bg-green-50 dark:bg-green-950/50">
             <CardHeader className="py-3">
-              <CardTitle className="text-sm flex items-center gap-2 text-green-700 dark:text-green-400">
+              <CardTitle className="text-sm flex items-center gap-2 text-green-700 dark:text-green-300">
                 <FlaskConical className="h-4 w-4" />
                 {l.primary}
               </CardTitle>
@@ -159,7 +159,7 @@ export const FertilizerAdvisory = ({ onAdvisoryComplete }: FertilizerAdvisoryPro
             <CardContent className="py-2">
               <div className="flex flex-wrap gap-2">
                 {result.primary_fertilizers.map((fert, idx) => (
-                  <Badge key={idx} variant="secondary" className="bg-green-100 dark:bg-green-900/30">
+                  <Badge key={idx} variant="outline" className="border-green-500 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 dark:border-green-600">
                     {fert}
                   </Badge>
                 ))}
@@ -198,9 +198,9 @@ export const FertilizerAdvisory = ({ onAdvisoryComplete }: FertilizerAdvisoryPro
 
         {/* Organic Alternatives */}
         {result.organic_alternatives && result.organic_alternatives.length > 0 && (
-          <Card className="border-amber-200 bg-amber-50/50 dark:bg-amber-950/20">
+          <Card className="border-amber-500/30 bg-amber-50 dark:bg-amber-950/50">
             <CardHeader className="py-3">
-              <CardTitle className="text-sm flex items-center gap-2 text-amber-700 dark:text-amber-400">
+              <CardTitle className="text-sm flex items-center gap-2 text-amber-700 dark:text-amber-300">
                 <Leaf className="h-4 w-4" />
                 {l.organic}
               </CardTitle>
@@ -208,7 +208,7 @@ export const FertilizerAdvisory = ({ onAdvisoryComplete }: FertilizerAdvisoryPro
             <CardContent className="py-2">
               <div className="flex flex-wrap gap-2">
                 {result.organic_alternatives.map((org, idx) => (
-                  <Badge key={idx} variant="outline" className="border-amber-300">
+                  <Badge key={idx} variant="outline" className="border-amber-500 bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100 dark:border-amber-600">
                     {org}
                   </Badge>
                 ))}
