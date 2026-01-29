@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 export interface MandiPrice {
   crop_name: string;
   crop_name_hi: string;
+  crop_name_te?: string;
   state: string;
   mandi: string;
   min_price: number;
@@ -17,13 +18,16 @@ export interface MandiPrice {
 export interface CropTrend {
   crop_name: string;
   crop_name_hi: string;
+  crop_name_te?: string;
   prices: { date: string; price: number }[];
   best_selling_month: string;
   best_selling_month_hi: string;
+  best_selling_month_te?: string;
   peak_price: number;
   current_price: number;
   recommendation: string;
   recommendation_hi: string;
+  recommendation_te?: string;
 }
 
 export interface MandiPricesResponse {

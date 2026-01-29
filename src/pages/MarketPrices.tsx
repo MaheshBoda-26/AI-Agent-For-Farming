@@ -200,10 +200,10 @@ export default function MarketPrices() {
         {trend && !isLoading && (
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                {language === 'hi' ? `${trend.crop_name_hi} ${t('market.priceTrend')}` : `${trend.crop_name} ${t('market.priceTrend')}`}
-              </CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              {language === 'hi' ? `${trend.crop_name_hi} ${t('market.priceTrend')}` : language === 'te' ? `${trend.crop_name_te || trend.crop_name} ${t('market.priceTrend')}` : `${trend.crop_name} ${t('market.priceTrend')}`}
+            </CardTitle>
               <CardDescription>
                 {t('market.priceHistory')}
               </CardDescription>
@@ -265,7 +265,7 @@ export default function MarketPrices() {
                     </p>
                     <p className="text-lg font-semibold text-foreground flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-primary" />
-                      {language === 'hi' ? trend.best_selling_month_hi : trend.best_selling_month}
+                      {language === 'hi' ? trend.best_selling_month_hi : language === 'te' ? (trend.best_selling_month_te || trend.best_selling_month) : trend.best_selling_month}
                     </p>
                   </div>
 
@@ -274,7 +274,7 @@ export default function MarketPrices() {
                       {t('market.recommendation')}
                     </p>
                     <p className="text-sm text-foreground">
-                      {language === 'hi' ? trend.recommendation_hi : trend.recommendation}
+                      {language === 'hi' ? trend.recommendation_hi : language === 'te' ? (trend.recommendation_te || trend.recommendation) : trend.recommendation}
                     </p>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function MarketPrices() {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h3 className="font-semibold text-foreground">
-                        {language === 'hi' ? price.crop_name_hi : price.crop_name}
+                        {language === 'hi' ? price.crop_name_hi : language === 'te' ? (price.crop_name_te || price.crop_name) : price.crop_name}
                       </h3>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
