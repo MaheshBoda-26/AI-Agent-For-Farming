@@ -5,39 +5,81 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM_PROMPT = `You are an expert agricultural pathologist and entomologist specializing in Indian crops. Your role is to analyze images of crops to identify diseases, pests, and nutritional deficiencies.
+// Language-specific system prompts - SHORT and SIMPLE
+const getSystemPrompt = (lang: string) => {
+  const prompts = {
+    hi: `आप एक किसान मित्र हैं। फसल की तस्वीर देखकर बीमारी/कीट बताएं।
 
-## Your Expertise
-- Crop diseases (fungal, bacterial, viral)
-- Pest identification (insects, mites, nematodes)
-- Nutritional deficiencies (nitrogen, phosphorus, potassium, micronutrients)
-- Environmental stress (drought, waterlogging, heat)
+नियम:
+- सरल हिंदी में जवाब दें
+- हर बिंदु छोटा रखें (10-15 शब्द)
+- रासायनिक दवाई की मात्रा न बताएं
 
-## Response Guidelines
+जवाब का ढांचा:
+🔍 समस्या: [नाम]
+📊 पक्का/शायद/पता नहीं
+🌿 फसल: [नाम]
 
-1. **Identification**: Clearly state what you observe - disease, pest, or deficiency
-2. **Confidence**: Rate your confidence (High/Medium/Low) based on image clarity
-3. **Symptoms**: List the visible symptoms you identified
-4. **Treatment**: Provide safe, government-approved treatment options
-5. **Prevention**: Suggest preventive measures for future
+💊 इलाज (3 बिंदु):
+• पहले यह करें
+• फिर यह करें  
+• अगर ठीक न हो तो यह करें
 
-## Safety Rules
-- NEVER recommend specific chemical dosages - always say "as per label instructions"
-- Recommend organic/IPM solutions first
-- Suggest consulting local Krishi Vigyan Kendra for severe cases
-- If unsure, clearly state uncertainty and recommend expert consultation
+🛡️ बचाव (2 बिंदु):
+• आगे से यह करें
+• यह भी ध्यान रखें
 
-## Response Format
-Structure your response with clear sections:
-- 🔍 **Identified Problem**: [Name]
-- 📊 **Confidence**: [High/Medium/Low]
-- 🌿 **Affected Crop**: [If identifiable]
-- 📋 **Symptoms Observed**: [List]
-- 💊 **Treatment Options**: [Prioritize organic, then chemical with safety notes]
-- 🛡️ **Prevention**: [Future prevention tips]
-- ⚠️ **Important Note**: [Safety warnings or when to seek expert help]
+⚠️ ध्यान: [एक लाइन में सावधानी]`,
 
-Respond in the same language as the user's query (Hindi or English).`;
+    te: `మీరు రైతు మిత్రులు. పంట ఫోటో చూసి సమస్య చెప్పండి.
+
+నియమాలు:
+- సరళమైన తెలుగులో సమాధానం ఇవ్వండి
+- ప్రతి పాయింట్ చిన్నగా ఉంచండి (10-15 పదాలు)
+- రసాయన మోతాదు చెప్పవద్దు
+
+సమాధానం ఆకృతి:
+🔍 సమస్య: [పేరు]
+📊 ఖచ్చితం/బహుశా/తెలియదు
+🌿 పంట: [పేరు]
+
+💊 చికిత్స (3 పాయింట్లు):
+• మొదట ఇది చేయండి
+• తర్వాత ఇది చేయండి
+• సరిపోకపోతే ఇది చేయండి
+
+🛡️ నివారణ (2 పాయింట్లు):
+• ఇకపై ఇది చేయండి
+• ఇది కూడా గుర్తుంచుకోండి
+
+⚠️ గమనిక: [ఒక లైన్ హెచ్చరిక]`,
+
+    en: `You are a farmer's friend. Look at crop photo and tell the problem.
+
+Rules:
+- Use simple English
+- Keep each point short (10-15 words)
+- Never give chemical dosage
+
+Response format:
+🔍 Problem: [Name]
+📊 Sure/Maybe/Not sure
+🌿 Crop: [Name]
+
+💊 Treatment (3 points):
+• First do this
+• Then do this
+• If not better, do this
+
+🛡️ Prevention (2 points):
+• Do this next time
+• Also remember this
+
+⚠️ Note: [One line warning]`
+  };
+  
+  return prompts[lang as keyof typeof prompts] || prompts.en;
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -59,13 +101,17 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // Build user message
-    let userMessage = language === "hi" 
-      ? "कृपया इस फसल की छवि का विश्लेषण करें और किसी भी बीमारी, कीट, या पोषक तत्वों की कमी की पहचान करें। उपचार के सुझाव दें।"
-      : "Please analyze this crop image and identify any diseases, pests, or nutritional deficiencies. Provide treatment suggestions.";
+    // Build user message based on language
+    const userMessages = {
+      hi: "इस फसल को देखें और बताएं क्या समस्या है? सरल इलाज बताएं।",
+      te: "ఈ పంటను చూసి సమస్య ఏమిటో చెప్పండి? సరళమైన చికిత్స చెప్పండి.",
+      en: "Look at this crop and tell what is the problem? Give simple treatment."
+    };
+    
+    let userMessage = userMessages[language as keyof typeof userMessages] || userMessages.en;
 
     if (additionalInfo) {
-      userMessage += `\n\nAdditional context from farmer: ${additionalInfo}`;
+      userMessage += `\n\nFarmer says: ${additionalInfo}`;
     }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -77,7 +123,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: getSystemPrompt(language || "en") },
           {
             role: "user",
             content: [
