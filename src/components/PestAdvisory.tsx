@@ -17,7 +17,7 @@ interface PestAdvisoryProps {
 }
 
 export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const { result, isLoading, error, getAdvisory, reset } = usePestAdvisory();
   
   const [cropName, setCropName] = useState('');
@@ -29,86 +29,6 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
 
   const crops = getCropsList();
   const stages = getGrowthStages();
-
-  const labels = {
-    en: {
-      title: 'Pest & Disease Advisory',
-      description: 'Identify pests and get treatment recommendations',
-      crop: 'Select Crop',
-      customCrop: 'Or enter crop name',
-      stage: 'Growth Stage',
-      symptoms: 'Describe Symptoms',
-      symptomsPlaceholder: 'Describe what you see: yellowing leaves, holes, wilting, insects, etc.',
-      image: 'Add Photo (Optional)',
-      submit: 'Get Advisory',
-      analyzing: 'Analyzing...',
-      reset: 'New Analysis',
-      confidence: 'Confidence',
-      riskLevel: 'Risk Level',
-      reasons: 'Why This Pest',
-      actions: 'Organic & Mechanical Controls',
-      chemicalOptions: 'Chemical Options',
-      chemicalDisclaimer: '⚠️ Consult local agriculture officer for dosage',
-      prevention: 'Prevention',
-      riskNote: 'Risk Warning',
-      followUp: 'When to Seek Help',
-      otherPossible: 'Other Possible Pests',
-      noPestFound: 'No Pest Identified',
-      discussWithAI: 'Discuss with AI',
-    },
-    hi: {
-      title: 'कीट एवं रोग सलाह',
-      description: 'कीटों की पहचान करें और उपचार की सिफारिशें प्राप्त करें',
-      crop: 'फसल चुनें',
-      customCrop: 'या फसल का नाम लिखें',
-      stage: 'विकास अवस्था',
-      symptoms: 'लक्षण बताएं',
-      symptomsPlaceholder: 'आप क्या देख रहे हैं बताएं: पत्तियों का पीलापन, छेद, मुरझाना, कीड़े आदि',
-      image: 'फोटो जोड़ें (वैकल्पिक)',
-      submit: 'सलाह प्राप्त करें',
-      analyzing: 'विश्लेषण हो रहा है...',
-      reset: 'नया विश्लेषण',
-      confidence: 'विश्वास स्तर',
-      riskLevel: 'जोखिम स्तर',
-      reasons: 'यह कीट क्यों',
-      actions: 'जैविक एवं यांत्रिक नियंत्रण',
-      chemicalOptions: 'रासायनिक विकल्प',
-      chemicalDisclaimer: '⚠️ खुराक के लिए स्थानीय कृषि अधिकारी से सलाह लें',
-      prevention: 'रोकथाम',
-      riskNote: 'जोखिम चेतावनी',
-      followUp: 'विशेषज्ञ से कब मिलें',
-      otherPossible: 'अन्य संभावित कीट',
-      noPestFound: 'कोई कीट नहीं पहचाना गया',
-      discussWithAI: 'AI से चर्चा करें',
-    },
-    te: {
-      title: 'పురుగు & వ్యాధి సలహా',
-      description: 'పురుగులను గుర్తించి చికిత్స సూచనలు పొందండి',
-      crop: 'పంట ఎంచుకోండి',
-      customCrop: 'లేదా పంట పేరు నమోదు చేయండి',
-      stage: 'పెరుగుదల దశ',
-      symptoms: 'లక్షణాలను వివరించండి',
-      symptomsPlaceholder: 'మీరు చూస్తున్నది వివరించండి: ఆకులు పసుపు, రంధ్రాలు, వాడిపోవడం, పురుగులు మొదలైనవి',
-      image: 'ఫోటో జోడించండి (ఐచ్ఛికం)',
-      submit: 'సలహా పొందండి',
-      analyzing: 'విశ్లేషిస్తోంది...',
-      reset: 'కొత్త విశ్లేషణ',
-      confidence: 'నమ్మకం',
-      riskLevel: 'ప్రమాద స్థాయి',
-      reasons: 'ఈ పురుగు ఎందుకు',
-      actions: 'సేంద్రీయ & యాంత్రిక నియంత్రణలు',
-      chemicalOptions: 'రసాయన ఎంపికలు',
-      chemicalDisclaimer: '⚠️ మోతాదు కోసం స్థానిక వ్యవసాయ అధికారిని సంప్రదించండి',
-      prevention: 'నివారణ',
-      riskNote: 'ప్రమాద హెచ్చరిక',
-      followUp: 'నిపుణుని ఎప్పుడు కలవాలి',
-      otherPossible: 'ఇతర సాధ్యమైన పురుగులు',
-      noPestFound: 'పురుగు గుర్తించబడలేదు',
-      discussWithAI: 'AI తో చర్చించండి',
-    },
-  };
-
-  const t = labels[language as keyof typeof labels] || labels.en;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -172,11 +92,11 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Bug className="h-5 w-5" />
-            {result.pest_name ? (result.pest_name_local || result.pest_name) : t.noPestFound}
+            {result.pest_name ? (result.pest_name_local || result.pest_name) : t('pest.noPestFound')}
           </h3>
           <Button variant="outline" size="sm" onClick={handleReset}>
             <RefreshCw className="h-4 w-4 mr-2" />
-            {t.reset}
+            {t('pest.reset')}
           </Button>
         </div>
 
@@ -185,7 +105,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
             {/* Confidence and Risk */}
             <div className="flex gap-4 flex-wrap">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">{t.confidence}:</span>
+                <span className="text-sm text-muted-foreground">{t('pest.confidence')}:</span>
                 <div className="flex items-center gap-2">
                   <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
                     <div 
@@ -207,7 +127,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm flex items-center gap-2">
                     <Info className="h-4 w-4" />
-                    {t.reasons}
+                    {t('pest.reasons')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
@@ -226,7 +146,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm flex items-center gap-2 text-green-700 dark:text-green-400">
                     <CheckCircle className="h-4 w-4" />
-                    {t.actions}
+                    {t('pest.actions')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
@@ -245,10 +165,10 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm flex items-center gap-2 text-amber-700 dark:text-amber-400">
                     <FlaskConical className="h-4 w-4" />
-                    {t.chemicalOptions}
+                    {t('pest.chemicalOptions')}
                   </CardTitle>
                   <CardDescription className="text-xs text-amber-600 dark:text-amber-500">
-                    {t.chemicalDisclaimer}
+                    {t('pest.chemicalDisclaimer')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="py-2">
@@ -269,7 +189,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm flex items-center gap-2">
                     <Shield className="h-4 w-4" />
-                    {t.prevention}
+                    {t('pest.prevention')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
@@ -286,7 +206,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
             {result.risk_note && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
-                <AlertTitle>{t.riskNote}</AlertTitle>
+                <AlertTitle>{t('pest.riskNote')}</AlertTitle>
                 <AlertDescription>{result.risk_note}</AlertDescription>
               </Alert>
             )}
@@ -295,7 +215,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
             {result.follow_up && (
               <Alert>
                 <Info className="h-4 w-4" />
-                <AlertTitle>{t.followUp}</AlertTitle>
+                <AlertTitle>{t('pest.followUp')}</AlertTitle>
                 <AlertDescription>{result.follow_up}</AlertDescription>
               </Alert>
             )}
@@ -304,7 +224,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
             {result.other_candidates && result.other_candidates.length > 0 && (
               <Card>
                 <CardHeader className="py-3">
-                  <CardTitle className="text-sm">{t.otherPossible}</CardTitle>
+                  <CardTitle className="text-sm">{t('pest.otherPossible')}</CardTitle>
                 </CardHeader>
                 <CardContent className="py-2">
                   <div className="flex flex-wrap gap-2">
@@ -320,13 +240,13 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
 
             {/* Discuss with AI */}
             <Button onClick={handleDiscussWithAI} className="w-full">
-              {t.discussWithAI}
+              {t('pest.discussWithAI')}
             </Button>
           </>
         ) : (
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>{t.noPestFound}</AlertTitle>
+            <AlertTitle>{t('pest.noPestFound')}</AlertTitle>
             <AlertDescription>{result.message || result.risk_note}</AlertDescription>
           </Alert>
         )}
@@ -339,9 +259,9 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       <div className="text-center mb-4">
         <h2 className="text-xl font-semibold text-foreground flex items-center justify-center gap-2">
           <Bug className="h-5 w-5" />
-          {t.title}
+          {t('pest.title')}
         </h2>
-        <p className="text-sm text-muted-foreground">{t.description}</p>
+        <p className="text-sm text-muted-foreground">{t('pest.description')}</p>
       </div>
 
       {error && (
@@ -353,10 +273,10 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
 
       {/* Crop Selection */}
       <div className="space-y-2">
-        <Label>{t.crop}</Label>
+        <Label>{t('pest.crop')}</Label>
         <Select value={cropName} onValueChange={setCropName}>
           <SelectTrigger>
-            <SelectValue placeholder={t.crop} />
+            <SelectValue placeholder={t('pest.crop')} />
           </SelectTrigger>
           <SelectContent>
             {crops.map((crop) => (
@@ -364,24 +284,24 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
                 {crop.charAt(0).toUpperCase() + crop.slice(1)}
               </SelectItem>
             ))}
-            <SelectItem value="other">Other / अन्य</SelectItem>
+            <SelectItem value="other">Other / अन्य / ఇతర</SelectItem>
           </SelectContent>
         </Select>
         {cropName === 'other' && (
           <Input
             value={customCrop}
             onChange={(e) => setCustomCrop(e.target.value)}
-            placeholder={t.customCrop}
+            placeholder={t('pest.customCrop')}
           />
         )}
       </div>
 
       {/* Growth Stage */}
       <div className="space-y-2">
-        <Label>{t.stage}</Label>
+        <Label>{t('pest.stage')}</Label>
         <Select value={growthStage} onValueChange={setGrowthStage}>
           <SelectTrigger>
-            <SelectValue placeholder={t.stage} />
+            <SelectValue placeholder={t('pest.stage')} />
           </SelectTrigger>
           <SelectContent>
             {stages.map((stage) => (
@@ -395,11 +315,11 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
 
       {/* Symptoms */}
       <div className="space-y-2">
-        <Label>{t.symptoms}</Label>
+        <Label>{t('pest.symptoms')}</Label>
         <Textarea
           value={symptomsText}
           onChange={(e) => setSymptomsText(e.target.value)}
-          placeholder={t.symptomsPlaceholder}
+          placeholder={t('pest.symptomsPlaceholder')}
           rows={3}
         />
       </div>
@@ -408,7 +328,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       <div className="space-y-2">
         <Label className="flex items-center gap-2">
           <Camera className="h-4 w-4" />
-          {t.image}
+          {t('pest.image')}
         </Label>
         <Input
           ref={fileInputRef}
@@ -436,14 +356,11 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
       >
         {isLoading ? (
           <>
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            {t.analyzing}
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {t('pest.analyzing')}
           </>
         ) : (
-          <>
-            <Bug className="h-4 w-4 mr-2" />
-            {t.submit}
-          </>
+          t('pest.submit')
         )}
       </Button>
     </form>
