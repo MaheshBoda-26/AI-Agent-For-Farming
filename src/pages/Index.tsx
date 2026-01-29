@@ -37,7 +37,7 @@ const Index = () => {
           🌾 Kisan Mitra AI
         </h1>
         <p className="text-muted-foreground mt-2 text-sm md:text-base animate-fade-in [animation-delay:150ms]">
-          Your Smart Farming Companion
+          {t('companion.title')}
         </p>
       </div>
 

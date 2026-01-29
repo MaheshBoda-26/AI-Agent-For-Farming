@@ -18,6 +18,67 @@ export interface Pest {
   prevention: string[];
 }
 
+// Crop translations for dropdowns
+export const CROP_TRANSLATIONS: { [key: string]: { en: string; hi: string; te: string } } = {
+  'rice': { en: 'Rice', hi: 'धान', te: 'వరి' },
+  'paddy': { en: 'Paddy', hi: 'धान', te: 'వరి' },
+  'wheat': { en: 'Wheat', hi: 'गेहूं', te: 'గోధుమ' },
+  'cotton': { en: 'Cotton', hi: 'कपास', te: 'పత్తి' },
+  'maize': { en: 'Maize', hi: 'मक्का', te: 'మొక్కజొన్న' },
+  'sugarcane': { en: 'Sugarcane', hi: 'गन्ना', te: 'చెరకు' },
+  'mustard': { en: 'Mustard', hi: 'सरसों', te: 'ఆవాలు' },
+  'rapeseed': { en: 'Rapeseed', hi: 'तोरिया', te: 'ఆవాలు' },
+  'canola': { en: 'Canola', hi: 'कैनोला', te: 'కానోలా' },
+  'tomato': { en: 'Tomato', hi: 'टमाटर', te: 'టమాటా' },
+  'brinjal': { en: 'Brinjal', hi: 'बैंगन', te: 'వంకాయ' },
+  'okra': { en: 'Okra', hi: 'भिंडी', te: 'బెండకాయ' },
+  'chilli': { en: 'Chilli', hi: 'मिर्च', te: 'మిరపకాయ' },
+  'potato': { en: 'Potato', hi: 'आलू', te: 'బంగాళాదుంప' },
+  'ginger': { en: 'Ginger', hi: 'अदरक', te: 'అల్లం' },
+  'chickpea': { en: 'Chickpea', hi: 'चना', te: 'సెనగలు' },
+  'pigeon pea': { en: 'Pigeon Pea', hi: 'अरहर', te: 'కంది' },
+  'green gram': { en: 'Green Gram', hi: 'मूंग', te: 'పెసలు' },
+  'black gram': { en: 'Black Gram', hi: 'उड़द', te: 'మినుము' },
+  'lentil': { en: 'Lentil', hi: 'मसूर', te: 'మసూర్' },
+  'mango': { en: 'Mango', hi: 'आम', te: 'మామిడి' },
+  'guava': { en: 'Guava', hi: 'अमरूद', te: 'జామ' },
+  'citrus': { en: 'Citrus', hi: 'नींबू वर्गीय', te: 'నిమ్మజాతి' },
+  'banana': { en: 'Banana', hi: 'केला', te: 'అరటి' },
+  'grapes': { en: 'Grapes', hi: 'अंगूर', te: 'ద్రాక్ష' },
+  'cucurbits': { en: 'Cucurbits', hi: 'कद्दूवर्गीय', te: 'కూరగాయలు' },
+  'pea': { en: 'Pea', hi: 'मटर', te: 'బఠాణీ' },
+  'vegetables': { en: 'Vegetables', hi: 'सब्जियां', te: 'కూరగాయలు' },
+};
+
+// Growth stage translations
+export const GROWTH_STAGE_TRANSLATIONS: { [key: string]: { en: string; hi: string; te: string } } = {
+  'seedling': { en: 'Seedling', hi: 'अंकुर अवस्था', te: 'మొలకల దశ' },
+  'vegetative': { en: 'Vegetative', hi: 'वानस्पतिक अवस्था', te: 'వృద్ధి దశ' },
+  'tillering': { en: 'Tillering', hi: 'कल्ले निकलना', te: 'పొదలు వేయడం' },
+  'stem elongation': { en: 'Stem Elongation', hi: 'तना बढ़ना', te: 'కాండం పెరుగుదల' },
+  'panicle initiation': { en: 'Panicle Initiation', hi: 'बाली निकलना', te: 'కంకి మొదలు' },
+  'heading': { en: 'Heading', hi: 'सिर निकलना', te: 'కంకి దశ' },
+  'flowering': { en: 'Flowering', hi: 'फूल आना', te: 'పూత దశ' },
+  'fruiting': { en: 'Fruiting', hi: 'फल लगना', te: 'పండ్ల దశ' },
+  'pod formation': { en: 'Pod Formation', hi: 'फली बनना', te: 'కాయలు ఏర్పడటం' },
+  'boll formation': { en: 'Boll Formation', hi: 'बोल बनना', te: 'పూసలు ఏర్పడటం' },
+  'grain filling': { en: 'Grain Filling', hi: 'दाना भरना', te: 'గింజలు నిండటం' },
+  'maturity': { en: 'Maturity', hi: 'परिपक्वता', te: 'పక్వ దశ' },
+};
+
+// Helper functions for translated names
+export const getCropName = (crop: string, language: string = 'en'): string => {
+  const translation = CROP_TRANSLATIONS[crop.toLowerCase()];
+  if (!translation) return crop.charAt(0).toUpperCase() + crop.slice(1);
+  return translation[language as 'en' | 'hi' | 'te'] || translation.en;
+};
+
+export const getGrowthStageName = (stage: string, language: string = 'en'): string => {
+  const translation = GROWTH_STAGE_TRANSLATIONS[stage.toLowerCase()];
+  if (!translation) return stage.charAt(0).toUpperCase() + stage.slice(1);
+  return translation[language as 'en' | 'hi' | 'te'] || translation.en;
+};
+
 export const pestDatabase: Pest[] = [
   // Rice Pests
   {

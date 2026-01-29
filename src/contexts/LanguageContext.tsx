@@ -241,10 +241,107 @@ const translations: Translations = {
   
   // Common
   'common.retry': { en: 'Retry', hi: 'पुनः प्रयास करें', te: 'మళ్లీ ప్రయత్నించండి' },
+  'common.error': { en: 'Error', hi: 'त्रुटि', te: 'లోపం' },
+  'common.loading': { en: 'Loading...', hi: 'लोड हो रहा है...', te: 'లోడ్ అవుతోంది...' },
   'language': { en: 'Language', hi: 'भाषा', te: 'భాష' },
   'english': { en: 'English', hi: 'अंग्रेज़ी', te: 'ఆంగ్లం' },
   'hindi': { en: 'हिंदी', hi: 'हिंदी', te: 'హిందీ' },
-  'telugu': { en: 'తెలుగు', hi: 'तेलुगु', te: 'తెలుగు' },
+  'telugu': { en: 'తెలుగు', hi: 'तेलుगు', te: 'తెలుగు' },
+  
+  // Hero Section Stats
+  'hero.stat.crops': { en: 'Crops Covered', hi: 'फसलें कवर', te: 'పంటలు కవర్' },
+  'hero.stat.states': { en: 'States Supported', hi: 'राज्य समर्थित', te: 'రాష్ట్రాలు మద్దతు' },
+  'hero.stat.assistance': { en: 'AI Assistance', hi: 'AI सहायता', te: 'AI సహాయం' },
+  'hero.badge': { en: 'Powered by AI • Available in Hindi, Telugu & English', hi: 'AI द्वारा संचालित • हिंदी, तेलुगु और अंग्रेजी में उपलब्ध', te: 'AI ద్వారా నడుస్తుంది • హిందీ, తెలుగు & ఆంగ్లంలో అందుబాటులో' },
+  
+  // Companion Text (Index page)
+  'companion.title': { en: 'Your Smart Farming Companion', hi: 'आपका स्मार्ट कृषि साथी', te: 'మీ స్మార్ట్ వ్యవసాయ సహచరుడు' },
+  
+  // Chat Header
+  'chat.header.title': { en: 'AI Farming Assistant', hi: 'AI कृषि सहायक', te: 'AI వ్యవసాయ సహాయకుడు' },
+  'chat.header.powered': { en: 'Powered by AI', hi: 'AI द्वारा संचालित', te: 'AI ద్వారా నడుస్తుంది' },
+  
+  // Weather Card
+  'weather.error': { en: 'Unable to load weather data', hi: 'मौसम डेटा लोड करने में असमर्थ', te: 'వాతావరణ డేటా లోడ్ చేయడం సాధ్యం కాలేదు' },
+  'weather.humidity': { en: 'Humidity', hi: 'नमी', te: 'తేమ' },
+  'weather.wind': { en: 'Wind', hi: 'हवा', te: 'గాలి' },
+  
+  // Market Prices Page
+  'market.title': { en: 'Mandi Prices', hi: 'मंडी भाव', te: 'మండీ ధరలు' },
+  'market.subtitle': { en: 'View current market prices and trends for different crops', hi: 'विभिन्न फसलों के वर्तमान बाजार भाव और रुझान देखें', te: 'వివిధ పంటల ప్రస్తుత మార్కెట్ ధరలు మరియు ట్రెండ్‌లను చూడండి' },
+  'market.liveData': { en: 'Live Data', hi: 'लाइव डेटा', te: 'లైవ్ డేటా' },
+  'market.demoData': { en: 'Demo Data', hi: 'डेमो डेटा', te: 'డెమో డేటా' },
+  'market.refresh': { en: 'Refresh', hi: 'ताज़ा करें', te: 'రిఫ్రెష్' },
+  'market.lastUpdated': { en: 'Last updated', hi: 'अंतिम अपडेट', te: 'చివరిగా అప్‌డేట్' },
+  'market.selectCrop': { en: 'Select Crop', hi: 'फसल चुनें', te: 'పంట ఎంచుకోండి' },
+  'market.allCrops': { en: 'All Crops', hi: 'सभी फसलें', te: 'అన్ని పంటలు' },
+  'market.selectState': { en: 'Select State', hi: 'राज्य चुनें', te: 'రాష్ట్రం ఎంచుకోండి' },
+  'market.allStates': { en: 'All States', hi: 'सभी राज्य', te: 'అన్ని రాష్ట్రాలు' },
+  'market.errorLoading': { en: 'Error loading data', hi: 'डेटा लोड करने में त्रुटि', te: 'డేటా లోడ్ చేయడంలో లోపం' },
+  'market.priceTrend': { en: 'Price Trend', hi: 'मूल्य रुझान', te: 'ధర ట్రెండ్' },
+  'market.priceHistory': { en: 'Price history for the last 6 months', hi: 'पिछले 6 महीने का मूल्य इतिहास', te: 'గత 6 నెలల ధర చరిత్ర' },
+  'market.currentPrice': { en: 'Current Price', hi: 'वर्तमान कीमत', te: 'ప్రస్తుత ధర' },
+  'market.quintal': { en: 'quintal', hi: 'क्विंटल', te: 'క్వింటాల్' },
+  'market.bestTime': { en: 'Best Selling Time', hi: 'बेचने का सबसे अच्छा समय', te: 'అమ్మడానికి ఉత్తమ సమయం' },
+  'market.recommendation': { en: 'Recommendation', hi: 'सिफारिश', te: 'సిఫార్సు' },
+  'market.min': { en: 'Min', hi: 'न्यूनतम', te: 'కనిష్ట' },
+  'market.max': { en: 'Max', hi: 'अधिकतम', te: 'గరిష్ట' },
+  'market.modalPrice': { en: 'Modal Price', hi: 'मोडल भाव', te: 'మోడల్ ధర' },
+  'market.noData': { en: 'No data available for selected filters', hi: 'चयनित फ़िल्टर के लिए कोई डेटा उपलब्ध नहीं है', te: 'ఎంచుకున్న ఫిల్టర్‌లకు డేటా అందుబాటులో లేదు' },
+  'market.note': { en: 'Note', hi: 'नोट', te: 'గమనిక' },
+  'market.disclaimer': { en: 'Prices are per quintal (100 kg). Actual prices may vary at local mandis.', hi: 'कीमतें प्रति क्विंटल (100 किलो) में हैं। वास्तविक कीमतें स्थानीय मंडी में भिन्न हो सकती हैं।', te: 'ధరలు క్వింటాల్‌కు (100 కిలో). వాస్తవ ధరలు స్థానిక మండీలలో భిన్నంగా ఉండవచ్చు.' },
+  'market.dataSource': { en: 'Data source: data.gov.in (Open Government Data Platform)', hi: 'डेटा स्रोत: data.gov.in (ओपन गवर्नमेंट डेटा प्लेटफॉर्म)', te: 'డేటా మూలం: data.gov.in (ఓపెన్ గవర్నమెంట్ డేటా ప్లాట్‌ఫారమ్)' },
+  'market.price': { en: 'Price', hi: 'कीमत', te: 'ధర' },
+  
+  // 404 Page
+  'notfound.title': { en: 'Page not found', hi: 'पेज नहीं मिला', te: 'పేజీ కనుగొనబడలేదు' },
+  'notfound.subtitle': { en: 'Oops! The page you are looking for does not exist.', hi: 'उफ़! आप जो पेज ढूंढ रहे हैं वह मौजूद नहीं है।', te: 'అయ్యో! మీరు వెతుకుతున్న పేజీ ఉనికిలో లేదు.' },
+  'notfound.home': { en: 'Return to Home', hi: 'होम पर वापस जाएं', te: 'హోమ్‌కు తిరిగి వెళ్ళండి' },
+  
+  // Pest Advisory - Crops (for dropdown)
+  'pest.crop.rice': { en: 'Rice', hi: 'धान', te: 'వరి' },
+  'pest.crop.paddy': { en: 'Paddy', hi: 'धान', te: 'వరి' },
+  'pest.crop.wheat': { en: 'Wheat', hi: 'गेहूं', te: 'గోధుమ' },
+  'pest.crop.cotton': { en: 'Cotton', hi: 'कपास', te: 'పత్తి' },
+  'pest.crop.maize': { en: 'Maize', hi: 'मक्का', te: 'మొక్కజొన్న' },
+  'pest.crop.sugarcane': { en: 'Sugarcane', hi: 'गन्ना', te: 'చెరకు' },
+  'pest.crop.mustard': { en: 'Mustard', hi: 'सरसों', te: 'ఆవాలు' },
+  'pest.crop.rapeseed': { en: 'Rapeseed', hi: 'तोरिया', te: 'ఆవాలు' },
+  'pest.crop.canola': { en: 'Canola', hi: 'कैनोला', te: 'కానోలా' },
+  'pest.crop.tomato': { en: 'Tomato', hi: 'टमाटर', te: 'టమాటా' },
+  'pest.crop.brinjal': { en: 'Brinjal', hi: 'बैंगन', te: 'వంకాయ' },
+  'pest.crop.okra': { en: 'Okra', hi: 'भिंडी', te: 'బెండకాయ' },
+  'pest.crop.chilli': { en: 'Chilli', hi: 'मिर्च', te: 'మిరపకాయ' },
+  'pest.crop.potato': { en: 'Potato', hi: 'आलू', te: 'బంగాళాదుంప' },
+  'pest.crop.ginger': { en: 'Ginger', hi: 'अदरक', te: 'అల్లం' },
+  'pest.crop.chickpea': { en: 'Chickpea', hi: 'चना', te: 'సెనగలు' },
+  'pest.crop.pigeonPea': { en: 'Pigeon Pea', hi: 'अरहर', te: 'కంది' },
+  'pest.crop.greenGram': { en: 'Green Gram', hi: 'मूंग', te: 'పెసలు' },
+  'pest.crop.blackGram': { en: 'Black Gram', hi: 'उड़द', te: 'మినుము' },
+  'pest.crop.lentil': { en: 'Lentil', hi: 'मसूर', te: 'మసూర్' },
+  'pest.crop.mango': { en: 'Mango', hi: 'आम', te: 'మామిడి' },
+  'pest.crop.guava': { en: 'Guava', hi: 'अमरूद', te: 'జామ' },
+  'pest.crop.citrus': { en: 'Citrus', hi: 'नींबू वर्गीय', te: 'నిమ్మజాతి' },
+  'pest.crop.banana': { en: 'Banana', hi: 'केला', te: 'అరటి' },
+  'pest.crop.grapes': { en: 'Grapes', hi: 'अंगूर', te: 'ద్రాక్ష' },
+  'pest.crop.cucurbits': { en: 'Cucurbits', hi: 'कद्दूवर्गीय', te: 'కూరగాయలు' },
+  'pest.crop.pea': { en: 'Pea', hi: 'मटर', te: 'బఠాణీ' },
+  'pest.crop.vegetables': { en: 'Vegetables', hi: 'सब्जियां', te: 'కూరగాయలు' },
+  'pest.crop.other': { en: 'Other', hi: 'अन्य', te: 'ఇతర' },
+  
+  // Growth Stages
+  'pest.stage.seedling': { en: 'Seedling', hi: 'अंकुर अवस्था', te: 'మొలకల దశ' },
+  'pest.stage.vegetative': { en: 'Vegetative', hi: 'वानस्पतिक अवस्था', te: 'వృద్ధి దశ' },
+  'pest.stage.tillering': { en: 'Tillering', hi: 'कल्ले निकलना', te: 'పొదలు వేయడం' },
+  'pest.stage.stemElongation': { en: 'Stem Elongation', hi: 'तना बढ़ना', te: 'కాండం పెరుగుదల' },
+  'pest.stage.panicleInitiation': { en: 'Panicle Initiation', hi: 'बाली निकलना', te: 'కంకి మొదలు' },
+  'pest.stage.heading': { en: 'Heading', hi: 'सिर निकलना', te: 'కంకి దశ' },
+  'pest.stage.flowering': { en: 'Flowering', hi: 'फूल आना', te: 'పూత దశ' },
+  'pest.stage.fruiting': { en: 'Fruiting', hi: 'फल लगना', te: 'పండ్ల దశ' },
+  'pest.stage.podFormation': { en: 'Pod Formation', hi: 'फली बनना', te: 'కాయలు ఏర్పడటం' },
+  'pest.stage.bollFormation': { en: 'Boll Formation', hi: 'बोल बनना', te: 'పూసలు ఏర్పడటం' },
+  'pest.stage.grainFilling': { en: 'Grain Filling', hi: 'दाना भरना', te: 'గింజలు నిండటం' },
+  'pest.stage.maturity': { en: 'Maturity', hi: 'परिपक्वता', te: 'పక్వ దశ' },
 };
 
 interface LanguageContextType {

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePestAdvisory } from '@/hooks/usePestAdvisory';
-import { getCropsList, getGrowthStages } from '@/data/pestDatabase';
+import { getCropsList, getGrowthStages, getCropName, getGrowthStageName } from '@/data/pestDatabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -281,10 +281,10 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
           <SelectContent>
             {crops.map((crop) => (
               <SelectItem key={crop} value={crop}>
-                {crop.charAt(0).toUpperCase() + crop.slice(1)}
+                {getCropName(crop, language)}
               </SelectItem>
             ))}
-            <SelectItem value="other">Other / अन्य / ఇతర</SelectItem>
+            <SelectItem value="other">{t('pest.crop.other')}</SelectItem>
           </SelectContent>
         </Select>
         {cropName === 'other' && (
@@ -306,7 +306,7 @@ export const PestAdvisory = ({ onAdvisoryComplete }: PestAdvisoryProps) => {
           <SelectContent>
             {stages.map((stage) => (
               <SelectItem key={stage} value={stage}>
-                {stage.charAt(0).toUpperCase() + stage.slice(1)}
+                {getGrowthStageName(stage, language)}
               </SelectItem>
             ))}
           </SelectContent>
