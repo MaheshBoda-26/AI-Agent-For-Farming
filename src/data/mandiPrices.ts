@@ -492,3 +492,16 @@ export function filterPrices(crop?: string, state?: string): MandiPrice[] {
 export function getCropTrend(cropName: string): CropPriceTrend | undefined {
   return CROP_PRICE_TRENDS.find(t => t.crop_name === cropName);
 }
+
+// Get crop translations map for dropdowns
+export function getCropTranslations(): { [key: string]: { en: string; hi: string; te: string } } {
+  const translations: { [key: string]: { en: string; hi: string; te: string } } = {};
+  CROP_BASE_DATA.forEach(crop => {
+    translations[crop.crop_name] = {
+      en: crop.crop_name,
+      hi: crop.crop_name_hi,
+      te: crop.crop_name_te
+    };
+  });
+  return translations;
+}
