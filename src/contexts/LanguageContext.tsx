@@ -293,10 +293,21 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   );
 };
 
+// Default fallback for when context is not available
+const defaultContext: LanguageContextType = {
+  language: 'en',
+  setLanguage: () => {},
+  t: (key: string) => key,
+  hasSelectedLanguage: false,
+  setHasSelectedLanguage: () => {},
+};
+
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    // Return default instead of throwing to handle edge cases during initial render
+    console.warn('useLanguage: LanguageContext not found, using defaults');
+    return defaultContext;
   }
   return context;
 };
