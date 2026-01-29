@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Loader2, Leaf, AlertTriangle, CheckCircle2, Info } from 'lucide-react';
-import { INDIAN_STATES, SOIL_TYPES, getCurrentSeason, getSeasonName } from '@/data/crops';
+import { INDIAN_STATES_DATA, SOIL_TYPES_DATA, getCurrentSeason, getSeasonName } from '@/data/crops';
 
 interface CropSuggestionFormProps {
   onSuggestionComplete?: (summary: string) => void;
@@ -96,9 +96,9 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
                     <SelectValue placeholder={t('crop.suggest.selectState')} />
                   </SelectTrigger>
                   <SelectContent>
-                    {INDIAN_STATES.map((state) => (
-                      <SelectItem key={state} value={state}>
-                        {state}
+                    {INDIAN_STATES_DATA.map((state) => (
+                      <SelectItem key={state.value} value={state.value}>
+                        {state[language as 'en' | 'hi' | 'te'] || state.en}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -118,9 +118,9 @@ export const CropSuggestionForm = ({ onSuggestionComplete }: CropSuggestionFormP
                     <SelectValue placeholder={t('crop.suggest.selectSoil')} />
                   </SelectTrigger>
                   <SelectContent>
-                    {SOIL_TYPES.map((soil) => (
-                      <SelectItem key={soil} value={soil}>
-                        {soil}
+                    {SOIL_TYPES_DATA.map((soil) => (
+                      <SelectItem key={soil.value} value={soil.value}>
+                        {soil[language as 'en' | 'hi' | 'te'] || soil.en}
                       </SelectItem>
                     ))}
                   </SelectContent>
