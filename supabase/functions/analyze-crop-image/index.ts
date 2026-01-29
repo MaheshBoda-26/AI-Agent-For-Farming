@@ -96,9 +96,9 @@ serve(async (req) => {
       );
     }
 
-    const GOOGLE_AI_API_KEY = Deno.env.get("GOOGLE_AI_API_KEY");
-    if (!GOOGLE_AI_API_KEY) {
-      throw new Error("GOOGLE_AI_API_KEY is not configured");
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) {
+      throw new Error("LOVABLE_API_KEY is not configured");
     }
 
     // Build user message based on language
@@ -114,43 +114,26 @@ serve(async (req) => {
       userMessage += `\n\nFarmer says: ${additionalInfo}`;
     }
 
-    const systemPrompt = getSystemPrompt(language || "en");
-
-    // Fetch image and convert to base64
-    const imageResponse = await fetch(imageUrl);
-    const imageBuffer = await imageResponse.arrayBuffer();
-    const base64Image = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
-    const mimeType = imageResponse.headers.get("content-type") || "image/jpeg";
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GOOGLE_AI_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [
-                { text: systemPrompt + "\n\n" + userMessage },
-                {
-                  inlineData: {
-                    mimeType: mimeType,
-                    data: base64Image,
-                  },
-                },
-              ],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.4,
-            maxOutputTokens: 1024,
-          },
-        }),
-      }
-    );
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          { role: "system", content: getSystemPrompt(language || "en") },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: userMessage },
+              { type: "image_url", image_url: { url: imageUrl } }
+            ]
+          }
+        ],
+      }),
+    });
 
     if (!response.ok) {
       if (response.status === 429) {
@@ -159,8 +142,14 @@ serve(async (req) => {
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: "AI credits exhausted. Please contact support." }),
+          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
       const errorText = await response.text();
-      console.error("Google AI API error:", response.status, errorText);
+      console.error("AI gateway error:", response.status, errorText);
       return new Response(
         JSON.stringify({ error: "Failed to analyze image" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -168,7 +157,7 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    const analysis = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const analysis = data.choices?.[0]?.message?.content;
 
     if (!analysis) {
       throw new Error("No analysis returned from AI");
