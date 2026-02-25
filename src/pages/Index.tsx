@@ -34,7 +34,7 @@ const Index = () => {
       {/* Platform Name Banner */}
       <div className="bg-primary/10 py-6 text-center mt-16">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary animate-fade-in">
-          🌾 Kisan Mitra AI
+          🌾 AI Agent for Farming
         </h1>
         <p className="text-muted-foreground mt-2 text-sm md:text-base animate-fade-in [animation-delay:150ms]">
           {t('companion.title')}
