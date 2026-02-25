@@ -28,7 +28,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Kisan Mitra AI" className="h-14 object-contain" />
+            <img src={logo} alt="AI Agent for Farming" className="h-14 object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
