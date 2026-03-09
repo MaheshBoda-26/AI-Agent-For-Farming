@@ -88,6 +88,10 @@ const Chat = () => {
           </div>
         </div>
       </div>
+      {/* Voice Assistant Overlay */}
+      {showVoiceMode && (
+        <VoiceAssistant onClose={() => setShowVoiceMode(false)} />
+      )}
     </div>
   );
 };
