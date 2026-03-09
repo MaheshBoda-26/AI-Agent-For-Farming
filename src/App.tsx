@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageSelectDialog } from "@/components/LanguageSelectDialog";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AssistantWidget } from "@/components/AssistantWidget";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
