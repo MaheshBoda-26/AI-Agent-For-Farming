@@ -31,7 +31,7 @@ const Auth = () => {
     );
   }
 
-  if (user) return <Navigate to="/" replace />;
+  if (user) return <Navigate to={from} replace />;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
