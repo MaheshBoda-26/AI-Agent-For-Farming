@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.fertilizer-advisory]
 verify_jwt = false
+
+[functions.elevenlabs-tts]
+verify_jwt = false

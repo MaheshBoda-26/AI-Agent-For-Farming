@@ -3,7 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { ChatBox } from '@/components/ChatBox';
 import { WeatherCard } from '@/components/WeatherCard';
+import { VoiceAssistant } from '@/components/VoiceAssistant';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
+import { AudioLines } from 'lucide-react';
 
 const Chat = () => {
   const { t } = useLanguage();
