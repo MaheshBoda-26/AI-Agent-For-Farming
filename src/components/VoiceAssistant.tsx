@@ -22,7 +22,7 @@ export const VoiceAssistant = ({ onClose }: VoiceAssistantProps) => {
   const [transcript, setTranscript] = useState('');
   const [response, setResponse] = useState('');
   const [conversationHistory, setConversationHistory] = useState<Array<{ role: string; content: string }>>([]);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<ReturnType<typeof window.SpeechRecognition extends new () => infer R ? () => R : never> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
