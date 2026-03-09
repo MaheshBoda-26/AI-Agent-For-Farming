@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageSelectDialog } from "@/components/LanguageSelectDialog";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AssistantWidget } from "@/components/AssistantWidget";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
@@ -33,11 +34,11 @@ function App() {
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/crops" element={<CropSuggestions />} />
-                <Route path="/pest" element={<PestAdvisoryPage />} />
-                <Route path="/disease" element={<DiseaseIdentification />} />
-                <Route path="/market" element={<MarketPrices />} />
+                <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+                <Route path="/crops" element={<ProtectedRoute><CropSuggestions /></ProtectedRoute>} />
+                <Route path="/pest" element={<ProtectedRoute><PestAdvisoryPage /></ProtectedRoute>} />
+                <Route path="/disease" element={<ProtectedRoute><DiseaseIdentification /></ProtectedRoute>} />
+                <Route path="/market" element={<ProtectedRoute><MarketPrices /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <AssistantWidget />
