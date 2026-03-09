@@ -3,12 +3,16 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { ChatBox } from '@/components/ChatBox';
 import { WeatherCard } from '@/components/WeatherCard';
+import { VoiceAssistant } from '@/components/VoiceAssistant';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
+import { AudioLines } from 'lucide-react';
 
 const Chat = () => {
   const { t } = useLanguage();
   const location = useLocation();
   const [initialMessage, setInitialMessage] = useState<string | null>(null);
+  const [showVoiceMode, setShowVoiceMode] = useState(false);
 
   // Check for initial message from navigation state (from Tools page)
   useEffect(() => {
@@ -27,11 +31,20 @@ const Chat = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="grid lg:grid-cols-3 gap-6 h-[calc(100vh-8rem)]">
             {/* Main Chat Area */}
-            <div className="lg:col-span-2 bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+            <div className="lg:col-span-2 bg-card rounded-xl border border-border overflow-hidden flex flex-col relative">
               <ChatBox 
                 initialMessage={initialMessage} 
                 onMessageSent={() => setInitialMessage(null)} 
               />
+              {/* Voice Mode Button */}
+              <Button
+                onClick={() => setShowVoiceMode(true)}
+                size="icon"
+                className="absolute bottom-20 right-4 h-12 w-12 rounded-full shadow-lg z-10"
+                title="Voice Assistant"
+              >
+                <AudioLines className="h-5 w-5" />
+              </Button>
             </div>
 
             {/* Sidebar */}
@@ -75,6 +88,10 @@ const Chat = () => {
           </div>
         </div>
       </div>
+      {/* Voice Assistant Overlay */}
+      {showVoiceMode && (
+        <VoiceAssistant onClose={() => setShowVoiceMode(false)} />
+      )}
     </div>
   );
 };
