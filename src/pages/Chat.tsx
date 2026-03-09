@@ -12,6 +12,7 @@ const Chat = () => {
   const { t } = useLanguage();
   const location = useLocation();
   const [initialMessage, setInitialMessage] = useState<string | null>(null);
+  const [showVoiceMode, setShowVoiceMode] = useState(false);
 
   // Check for initial message from navigation state (from Tools page)
   useEffect(() => {
