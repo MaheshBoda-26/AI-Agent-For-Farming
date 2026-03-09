@@ -15,6 +15,8 @@ import logo from '@/assets/logo.png';
 const Auth = () => {
   const { user, loading, signIn, signUp, resetPassword } = useAuth();
   const { t } = useLanguage();
+  const location = useLocation();
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/';
   const [tab, setTab] = useState<'login' | 'signup' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
