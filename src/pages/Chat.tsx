@@ -31,11 +31,20 @@ const Chat = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="grid lg:grid-cols-3 gap-6 h-[calc(100vh-8rem)]">
             {/* Main Chat Area */}
-            <div className="lg:col-span-2 bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+            <div className="lg:col-span-2 bg-card rounded-xl border border-border overflow-hidden flex flex-col relative">
               <ChatBox 
                 initialMessage={initialMessage} 
                 onMessageSent={() => setInitialMessage(null)} 
               />
+              {/* Voice Mode Button */}
+              <Button
+                onClick={() => setShowVoiceMode(true)}
+                size="icon"
+                className="absolute bottom-20 right-4 h-12 w-12 rounded-full shadow-lg z-10"
+                title="Voice Assistant"
+              >
+                <AudioLines className="h-5 w-5" />
+              </Button>
             </div>
 
             {/* Sidebar */}
