@@ -63,7 +63,7 @@ async function callGemini(messages, model = 'gemini-2.5-flash') {
       headers: {
         'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://lovable.dev',
+        'HTTP-Referer': 'https://github.com/MaheshBoda-26/AI-Agent-For-Farming',
         'X-Title': 'Krishi Mitra AI'
       },
       body: JSON.stringify({
@@ -126,7 +126,7 @@ async function callGeminiStream(messages, model = 'gemini-2.5-flash') {
       headers: {
         'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://lovable.dev',
+        'HTTP-Referer': 'https://github.com/MaheshBoda-26/AI-Agent-For-Farming',
         'X-Title': 'Krishi Mitra AI'
       },
       body: JSON.stringify({
