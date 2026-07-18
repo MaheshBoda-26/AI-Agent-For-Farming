@@ -59,8 +59,9 @@ mongoose.connection.on('error', (err) => {
 // fail gracefully with a proper error message instead of the whole server being down
 connectWithRetry();
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
-// Trigger reload 4
-
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
+module.exports = app;
