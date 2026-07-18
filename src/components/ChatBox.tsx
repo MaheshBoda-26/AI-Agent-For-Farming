@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ChatMessage } from './ChatMessage';
 import { QuickActions } from './QuickActions';
-import { VoiceInput } from './VoiceInput';
 import { Send, Leaf, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -130,10 +129,6 @@ export const ChatBox = ({ initialMessage, onMessageSent }: ChatBoxProps) => {
       {/* Input Area */}
       <div className="p-4 border-t border-border bg-card">
         <div className="flex gap-2">
-          <VoiceInput 
-            onTranscript={(text) => setInput(prev => prev ? `${prev} ${text}` : text)} 
-            disabled={isLoading}
-          />
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}

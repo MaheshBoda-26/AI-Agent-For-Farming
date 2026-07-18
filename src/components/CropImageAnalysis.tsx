@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCropImageAnalysis } from '@/hooks/useCropImageAnalysis';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -42,29 +42,9 @@ export const CropImageAnalysis = ({ onAnalysisComplete }: CropImageAnalysisProps
     reset();
 
     try {
-      // Generate unique filename
-      const timestamp = Date.now();
-      const fileExt = file.name.split('.').pop();
-      const fileName = `crop-${timestamp}.${fileExt}`;
-
-      // Upload to Supabase Storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('crop-images')
-        .upload(fileName, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (uploadError) {
-        throw new Error(uploadError.message);
-      }
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('crop-images')
-        .getPublicUrl(uploadData.path);
-
-      setSelectedImage(publicUrl);
+      // Upload to Express backend storage
+      const result = await api.upload('/storage/upload', file);
+      setSelectedImage(result.publicUrl);
     } catch (err) {
       console.error('Upload error:', err);
       alert(t('disease.uploadFailed'));

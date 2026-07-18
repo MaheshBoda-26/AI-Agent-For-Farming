@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 
 interface CurrentWeather {
   temp: number;
@@ -36,21 +36,13 @@ export const useWeather = (): UseWeatherResult => {
   const [error, setError] = useState<string | null>(null);
   const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
 
-  // Get user's location
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCoords({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-          });
+          setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
         },
-        (err) => {
-          console.log('Geolocation error:', err.message);
-          // Will use default location (Warangal)
-          setCoords(null);
-        },
+        () => setCoords(null),
         { timeout: 5000, enableHighAccuracy: false }
       );
     }
@@ -59,20 +51,9 @@ export const useWeather = (): UseWeatherResult => {
   const fetchWeather = useCallback(async () => {
     setIsLoading(true);
     setError(null);
-
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('get-weather', {
-        body: coords ? { lat: coords.lat, lon: coords.lon } : {},
-      });
-
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
+      const data = await api.post('/functions/get-weather', coords ? { lat: coords.lat, lon: coords.lon } : {});
+      if (data.error) throw new Error(data.error);
       setWeather(data);
     } catch (err) {
       console.error('Weather fetch error:', err);
@@ -82,13 +63,8 @@ export const useWeather = (): UseWeatherResult => {
     }
   }, [coords]);
 
-  // Fetch weather when coords change or on initial mount
   useEffect(() => {
-    // Small delay to allow geolocation to complete
-    const timer = setTimeout(() => {
-      fetchWeather();
-    }, 1000);
-
+    const timer = setTimeout(() => { fetchWeather(); }, 1000);
     return () => clearTimeout(timer);
   }, [fetchWeather]);
 

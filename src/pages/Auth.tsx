@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Navbar } from '@/components/Navbar';
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Bell } from 'lucide-react';
 import logo from '@/assets/logo.png';
 
 const Auth = () => {
@@ -21,6 +21,7 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [receiveAlerts, setReceiveAlerts] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   if (loading) {
@@ -44,12 +45,11 @@ const Auth = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    const { error } = await signUp(email, password, displayName);
+    const { error } = await signUp(email, password, displayName, receiveAlerts);
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success('Check your email for a confirmation link!');
-      setTab('login');
+      toast.success('Account created successfully!');
     }
     setSubmitting(false);
   };
@@ -120,7 +120,7 @@ const Auth = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="login-password">Password</Label>
-                      <Input id="login-password" type="password" value={email.length ? password : ''} onChange={(e) => setPassword(e.target.value)} required />
+                      <Input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                   </CardContent>
                   <CardFooter className="flex flex-col gap-3">
@@ -150,6 +150,27 @@ const Auth = () => {
                       <Label htmlFor="signup-password">Password</Label>
                       <Input id="signup-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
                     </div>
+                    <label
+                      htmlFor="receive-alerts"
+                      className="flex items-start gap-3 p-3 rounded-lg border border-border bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        id="receive-alerts"
+                        checked={receiveAlerts}
+                        onChange={(e) => setReceiveAlerts(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 rounded border-primary text-primary focus:ring-primary"
+                      />
+                      <div className="flex-1">
+                        <span className="text-sm font-medium text-foreground flex items-center gap-1.5">
+                          <Bell className="h-3.5 w-3.5 text-primary" />
+                          Receive farming alerts via email
+                        </span>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          Get weather warnings, pest alerts, and market price updates directly to your inbox
+                        </p>
+                      </div>
+                    </label>
                   </CardContent>
                   <CardFooter>
                     <Button type="submit" className="w-full" disabled={submitting}>

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 
 export interface FertilizerAdvisoryInput {
   crop_name: string;
@@ -36,20 +36,9 @@ export const useFertilizerAdvisory = (): UseFertilizerAdvisoryReturn => {
     setIsLoading(true);
     setError(null);
     setResult(null);
-
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('fertilizer-advisory', {
-        body: input,
-      });
-
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
+      const data = await api.post('/functions/fertilizer-advisory', input);
+      if (data.error) throw new Error(data.error);
       setResult(data as FertilizerAdvisoryResult);
     } catch (err) {
       console.error('Fertilizer advisory error:', err);
@@ -59,17 +48,7 @@ export const useFertilizerAdvisory = (): UseFertilizerAdvisoryReturn => {
     }
   }, []);
 
-  const reset = useCallback(() => {
-    setResult(null);
-    setError(null);
-    setIsLoading(false);
-  }, []);
+  const reset = useCallback(() => { setResult(null); setError(null); setIsLoading(false); }, []);
 
-  return {
-    result,
-    isLoading,
-    error,
-    getAdvisory,
-    reset,
-  };
+  return { result, isLoading, error, getAdvisory, reset };
 };

@@ -14,6 +14,9 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!user) {
+    // Clear any stale token before redirecting
+    // This handles the case where localStorage has a token but it's expired/invalid
+    localStorage.removeItem('auth_token');
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 

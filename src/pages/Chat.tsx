@@ -3,16 +3,13 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { ChatBox } from '@/components/ChatBox';
 import { WeatherCard } from '@/components/WeatherCard';
-import { VoiceAssistant } from '@/components/VoiceAssistant';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { AudioLines } from 'lucide-react';
 
 const Chat = () => {
   const { t } = useLanguage();
   const location = useLocation();
   const [initialMessage, setInitialMessage] = useState<string | null>(null);
-  const [showVoiceMode, setShowVoiceMode] = useState(false);
 
   // Check for initial message from navigation state (from Tools page)
   useEffect(() => {
@@ -36,15 +33,6 @@ const Chat = () => {
                 initialMessage={initialMessage} 
                 onMessageSent={() => setInitialMessage(null)} 
               />
-              {/* Voice Mode Button */}
-              <Button
-                onClick={() => setShowVoiceMode(true)}
-                size="icon"
-                className="absolute bottom-20 right-4 h-12 w-12 rounded-full shadow-lg z-10"
-                title="Voice Assistant"
-              >
-                <AudioLines className="h-5 w-5" />
-              </Button>
             </div>
 
             {/* Sidebar */}
@@ -88,10 +76,6 @@ const Chat = () => {
           </div>
         </div>
       </div>
-      {/* Voice Assistant Overlay */}
-      {showVoiceMode && (
-        <VoiceAssistant onClose={() => setShowVoiceMode(false)} />
-      )}
     </div>
   );
 };

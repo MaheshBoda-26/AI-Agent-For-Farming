@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 
 export interface PestAdvisoryInput {
   crop_name: string;
@@ -47,20 +47,9 @@ export const usePestAdvisory = (): UsePestAdvisoryReturn => {
     setIsLoading(true);
     setError(null);
     setResult(null);
-
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('pest-advisory', {
-        body: input,
-      });
-
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
+      const data = await api.post('/functions/pest-advisory', input);
+      if (data.error) throw new Error(data.error);
       setResult(data as PestAdvisoryResult);
     } catch (err) {
       console.error('Pest advisory error:', err);
@@ -70,17 +59,7 @@ export const usePestAdvisory = (): UsePestAdvisoryReturn => {
     }
   }, []);
 
-  const reset = useCallback(() => {
-    setResult(null);
-    setError(null);
-    setIsLoading(false);
-  }, []);
+  const reset = useCallback(() => { setResult(null); setError(null); setIsLoading(false); }, []);
 
-  return {
-    result,
-    isLoading,
-    error,
-    getAdvisory,
-    reset,
-  };
+  return { result, isLoading, error, getAdvisory, reset };
 };

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 
 export interface MandiPrice {
   crop_name: string;
@@ -33,10 +33,7 @@ export interface CropTrend {
 export interface MandiPricesResponse {
   prices: MandiPrice[];
   trend: CropTrend | null;
-  filters: {
-    crops: string[];
-    states: string[];
-  };
+  filters: { crops: string[]; states: string[] };
   last_updated: string;
   is_live_data: boolean;
 }
@@ -49,59 +46,23 @@ export function useMandiPrices() {
   const fetchPrices = useCallback(async (crop?: string, state?: string) => {
     setIsLoading(true);
     setError(null);
-
     try {
-      // Build query params
-      const params = new URLSearchParams();
-      if (crop) params.set('crop', crop);
-      if (state) params.set('state', state);
+      const response = await api.post('/functions/mandi-prices', { crop, state });
+      if (!response?.success) throw new Error(response?.error || 'Failed to fetch prices');
 
-      // Supabase edge function invocation
-      const { data: response, error: fnError } = await supabase.functions.invoke(
-        'mandi-prices',
-        {
-          method: 'GET',
-        }
-      );
-
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
-
-      if (!response?.success) {
-        throw new Error(response?.error || 'Failed to fetch prices');
-      }
-
-      // Apply client-side filters since edge function returns all data
       let filteredData = { ...response.data };
-      
-      if (crop) {
-        filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.crop_name === crop);
-      }
-      if (state) {
-        filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.state === state);
-      }
+      if (crop) filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.crop_name === crop);
+      if (state) filteredData.prices = filteredData.prices.filter((p: MandiPrice) => p.state === state);
 
       setData(filteredData);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to fetch prices';
-      setError(message);
-      console.error('Mandi prices error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch prices');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Auto-fetch on mount
-  useEffect(() => {
-    fetchPrices();
-  }, [fetchPrices]);
+  useEffect(() => { fetchPrices(); }, [fetchPrices]);
 
-  return {
-    isLoading,
-    error,
-    data,
-    fetchPrices,
-    refetch: () => fetchPrices(),
-  };
+  return { isLoading, error, data, fetchPrices, refetch: () => fetchPrices() };
 }

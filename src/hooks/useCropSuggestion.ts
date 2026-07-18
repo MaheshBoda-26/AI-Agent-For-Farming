@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { api } from '@/integrations/api';
 
 export interface CropSuggestion {
   name: string;
@@ -39,20 +39,9 @@ export const useCropSuggestion = (): UseCropSuggestionResult => {
     setError(null);
     setMessage(null);
     setSuggestions([]);
-
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('crop-suggest', {
-        body: input,
-      });
-
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
-
-      if (data.error) {
-        throw new Error(data.errors?.join(', ') || data.error);
-      }
-
+      const data = await api.post('/functions/crop-suggest', input);
+      if (data.error) throw new Error(data.errors?.join(', ') || data.error);
       setSuggestions(data.crops || []);
       setMessage(data.message || null);
     } catch (err) {
@@ -63,11 +52,5 @@ export const useCropSuggestion = (): UseCropSuggestionResult => {
     }
   }, []);
 
-  return {
-    suggestions,
-    isLoading,
-    error,
-    message,
-    getSuggestions,
-  };
+  return { suggestions, isLoading, error, message, getSuggestions };
 };

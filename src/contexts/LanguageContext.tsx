@@ -1,13 +1,49 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Language = 'en' | 'hi' | 'te';
+type Language = 'en' | 'hi' | 'te' | 'bn' | 'ta' | 'mr' | 'gu' | 'kn' | 'ml' | 'pa' | 'or' | 'as' | 'ur' | 'mai' | 'sa' | 'sd' | 'ks' | 'ne' | 'mni' | 'doi' | 'kok' | 'sat' | 'bodo';
+
+// Language metadata for all supported Indian languages
+export const INDIAN_LANGUAGES: { code: Language; name: string; nativeName: string; speechCode: string }[] = [
+  { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-IN' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', speechCode: 'hi-IN' },
+  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', speechCode: 'te-IN' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', speechCode: 'bn-IN' },
+  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', speechCode: 'ta-IN' },
+  { code: 'mr', name: 'Marathi', nativeName: 'मराठी', speechCode: 'mr-IN' },
+  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN' },
+  { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ', speechCode: 'kn-IN' },
+  { code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം', speechCode: 'ml-IN' },
+  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', speechCode: 'pa-IN' },
+  { code: 'or', name: 'Odia', nativeName: 'ଓଡ଼ିଆ', speechCode: 'or-IN' },
+  { code: 'as', name: 'Assamese', nativeName: 'অসমীয়া', speechCode: 'as-IN' },
+  { code: 'ur', name: 'Urdu', nativeName: 'اردو', speechCode: 'ur-IN' },
+  { code: 'mai', name: 'Maithili', nativeName: 'মৈথিলী', speechCode: 'mai-IN' },
+  { code: 'sa', name: 'Sanskrit', nativeName: 'संस्कृतम्', speechCode: 'sa-IN' },
+  { code: 'sd', name: 'Sindhi', nativeName: 'سنڌي', speechCode: 'sd-IN' },
+  { code: 'ks', name: 'Kashmiri', nativeName: 'कॉशुर', speechCode: 'ks-IN' },
+  { code: 'ne', name: 'Nepali', nativeName: 'नेपाली', speechCode: 'ne-IN' },
+  { code: 'mni', name: 'Manipuri', nativeName: 'মৈতৈলোন্', speechCode: 'mni-IN' },
+  { code: 'doi', name: 'Dogri', nativeName: 'डोगरी', speechCode: 'doi-IN' },
+  { code: 'kok', name: 'Konkani', nativeName: 'कोंकणी', speechCode: 'kok-IN' },
+  { code: 'sat', name: 'Santali', nativeName: 'ᱥᱟᱱᱛᱟᱲᱤ', speechCode: 'sat-IN' },
+  { code: 'bodo', name: 'Bodo', nativeName: 'बड़ो', speechCode: 'brx-IN' },
+];
+
+// Helper to get language name by code
+export function getLanguageName(code: string): string {
+  return INDIAN_LANGUAGES.find(l => l.code === code)?.name || 'English';
+}
+
+export function getLanguageNativeName(code: string): string {
+  return INDIAN_LANGUAGES.find(l => l.code === code)?.nativeName || 'English';
+}
+
+export function getSpeechCode(code: string): string {
+  return INDIAN_LANGUAGES.find(l => l.code === code)?.speechCode || 'en-IN';
+}
 
 interface Translations {
-  [key: string]: {
-    en: string;
-    hi: string;
-    te: string;
-  };
+  [key: string]: Record<string, string>;
 }
 
 const translations: Translations = {
