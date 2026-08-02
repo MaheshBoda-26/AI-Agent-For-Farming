@@ -31,3 +31,4 @@ out/
 .env.production
 .env.local
 server/.env
+node_modules
